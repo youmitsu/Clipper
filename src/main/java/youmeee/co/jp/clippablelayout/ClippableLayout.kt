@@ -23,6 +23,7 @@ class ClippableLayout @JvmOverloads constructor(
                 R.styleable.ClippableLayout_backgroundColor,
                 R.color.default_gray
             )
+            //TODO: transitionの実装
             transitionEnabled = a.getBoolean(R.styleable.ClippableLayout_transitionEnabled, true)
         } finally {
             a.recycle()
