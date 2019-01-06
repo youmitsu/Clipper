@@ -13,9 +13,12 @@ class ClippableLayout @JvmOverloads constructor(
 
     private val clippableView: ClippableView = ClippableView(context, attributeSet, defStyle)
 
-    init {
-        val view = View(context, attributeSet, defStyle)
-        view.setBackgroundColor(resources.getColor(R.color.error_color_material_dark))
+    val view = View(context, attributeSet, defStyle)
+
+    fun showOverlay() {
+        view.setBackgroundColor(resources.getColor(R.color.primary_text_default_material_light))
         addView(view)
+        invalidate()
     }
+
 }
