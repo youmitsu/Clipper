@@ -11,12 +11,27 @@ class ClippableLayout @JvmOverloads constructor(
     defStyle: Int = 0
 ) : FrameLayout(context, attributeSet, defStyle) {
 
-    private val clippableView: ClippableView = ClippableView(context, attributeSet, defStyle)
+    //private val clippableView: ClippableView = ClippableView(context, attributeSet, defStyle)
+    private val view: View = View(context, attributeSet, defStyle)
+    private var backGroundColorResId: Int = 0
+    private var transitionEnabled = true
 
-    val view = View(context, attributeSet, defStyle)
+    init {
+        val a = context.obtainStyledAttributes(attributeSet, R.styleable.ClippableLayout)
+        try {
+            backGroundColorResId = a.getResourceId(
+                R.styleable.ClippableLayout_backgroundColor,
+                R.color.default_gray
+            )
+            transitionEnabled = a.getBoolean(R.styleable.ClippableLayout_transitionEnabled, true)
+        } finally {
+            a.recycle()
+        }
+    }
 
     fun showOverlay() {
-        view.setBackgroundColor(resources.getColor(R.color.primary_text_default_material_light))
+        //clippableView.setBackgroundColor(backGroundColorResId)
+        view.setBackgroundColor(resources.getColor(backGroundColorResId))
         addView(view)
         invalidate()
     }
