@@ -2,7 +2,6 @@ package youmeee.co.jp.clippablelayout
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
 
 class ClippableLayout @JvmOverloads constructor(
@@ -11,8 +10,7 @@ class ClippableLayout @JvmOverloads constructor(
     defStyle: Int = 0
 ) : FrameLayout(context, attributeSet, defStyle) {
 
-    //private val clippableView: ClippableView = ClippableView(context, attributeSet, defStyle)
-    private val view: View = View(context, attributeSet, defStyle)
+    val clippableView: ClippableView = ClippableView(context, attributeSet, defStyle)
     private var backGroundColorResId: Int = 0
     private var transitionEnabled = true
 
@@ -31,9 +29,8 @@ class ClippableLayout @JvmOverloads constructor(
     }
 
     fun showOverlay() {
-        //clippableView.setBackgroundColor(backGroundColorResId)
-        view.setBackgroundColor(resources.getColor(backGroundColorResId))
-        addView(view)
+        clippableView.setBackGroundColor(resources.getColor(backGroundColorResId))
+        addView(clippableView)
         invalidate()
     }
 

@@ -1,7 +1,10 @@
 package youmeee.co.jp.clippablelayout
 
 import android.content.Context
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.View
 
@@ -15,7 +18,7 @@ class ClippableView @JvmOverloads constructor(
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val porterDuffXferMode: PorterDuffXfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
 
-    private var clipList: List<Rect> = mutableListOf()
+    private var clipList: MutableList<ClipEntry> = mutableListOf()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -24,30 +27,39 @@ class ClippableView @JvmOverloads constructor(
         canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backGroundPaint)
         paint.xfermode = porterDuffXferMode
 
-        clipList.map { toClipCircle(it) }.forEach {
-            canvas.drawCircle(it.centerX, it.centerY, it.radius, paint)
-        }
+        clipList.forEach { it.clip(canvas, backGroundPaint) }
     }
 
     fun setBackGroundColor(color: Int) {
         backGroundPaint.color = color
     }
 
-    fun setClipRect(rectList: List<Rect>) {
-        this.clipList = rectList
-        invalidate()
+    /**
+     * @param entry: It's object to be a clipped entry.
+     *
+     * Method to add this entry object.
+     */
+    fun setClipView(entry: ClipEntry) {
+        clipList.add(entry)
     }
 
-    private fun toClipCircle(clipRect: Rect): ClipCircle {
-        val centerX = clipRect.left + (clipRect.right - clipRect.left) / 2
-        val centerY = clipRect.top + (clipRect.bottom - clipRect.top) / 2
-        val radius = (clipRect.right - clipRect.left) / 2
-        return ClipCircle(centerX.toFloat(), centerY.toFloat(), radius.toFloat())
+    /**
+     * @param entryList: It's object to be a list of clipped entries.
+     *
+     * Method to add a list of these entries objects composed List.
+     */
+    fun setClipViews(entryList: List<ClipEntry>) {
+        entryList.forEach {
+            clipList.add(it)
+        }
     }
 
-    private class ClipCircle(
-        val centerX: Float,
-        val centerY: Float,
-        val radius: Float
-    )
+    /**
+     * @param entries: There are multiple objects to be clipped.
+     *
+     * Method to add a list of these entries objects.
+     */
+    fun setClipViews(vararg entries: ClipEntry) {
+        setClipViews(entries.toList())
+    }
 }
