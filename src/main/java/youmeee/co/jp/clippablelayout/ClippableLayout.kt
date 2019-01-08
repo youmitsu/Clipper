@@ -10,7 +10,7 @@ class ClippableLayout @JvmOverloads constructor(
     defStyle: Int = 0
 ) : FrameLayout(context, attributeSet, defStyle) {
 
-    private val clippableView: ClippableView = ClippableView(context, attributeSet, defStyle)
+    val clippableView: ClippableView = ClippableView(context, attributeSet, defStyle)
     private var backGroundColorResId: Int = 0
     private var transitionEnabled = true
 
