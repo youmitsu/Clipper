@@ -33,5 +33,4 @@ class ClippableLayout @JvmOverloads constructor(
         addView(clippableView)
         invalidate()
     }
-
 }
