@@ -1,12 +1,10 @@
 package youmeee.co.jp.clippablelayout
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import android.view.Window
 
 class ClippableView @JvmOverloads constructor(
     context: Context,
@@ -19,15 +17,20 @@ class ClippableView @JvmOverloads constructor(
     private val porterDuffXferMode: PorterDuffXfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
 
     private var clipList: MutableList<ClipEntry> = mutableListOf()
+    private val decorRect = Rect()
+    var window: Window? = null
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        setLayerType(View.LAYER_TYPE_HARDWARE, null)
+        window?.let { w ->
+            setLayerType(View.LAYER_TYPE_HARDWARE, null)
 
-        canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backGroundPaint)
-        paint.xfermode = porterDuffXferMode
+            canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backGroundPaint)
+            paint.xfermode = porterDuffXferMode
 
-        clipList.forEach { it.clip(canvas, backGroundPaint) }
+            w.decorView.getWindowVisibleDisplayFrame(decorRect)
+            clipList.forEach { it.clip(canvas, paint, decorRect) }
+        }
     }
 
     fun setBackGroundColor(color: Int) {
