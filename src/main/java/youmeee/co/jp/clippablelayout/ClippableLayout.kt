@@ -2,7 +2,6 @@ package youmeee.co.jp.clippablelayout
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.Window
 import android.widget.FrameLayout
 
 class ClippableLayout @JvmOverloads constructor(
@@ -29,8 +28,7 @@ class ClippableLayout @JvmOverloads constructor(
         }
     }
 
-    fun showOverlay(window: Window) {
-        clippableView.window = window
+    fun showOverlay() {
         clippableView.setBackGroundColor(resources.getColor(backGroundColorResId))
         addView(clippableView)
         invalidate()

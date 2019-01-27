@@ -10,9 +10,14 @@ class CircleClipEntry(val context: Context) : ClipEntry(context) {
 
     var target: View? = null
     val targetGlobalVisibleRect = Rect()
+    var clipMargin: Int = 0
 
     constructor(context: Context, target: View) : this(context) {
         this.target = target
+    }
+
+    constructor(context: Context, target: View, clipMargin: Float) : this(context, target) {
+        this.clipMargin = clipMargin.toInt()
     }
 
     constructor(context: Context, resId: Int) : this(context) {
@@ -29,10 +34,10 @@ class CircleClipEntry(val context: Context) : ClipEntry(context) {
     }
 
     private fun adjustRectPosition(target: View, decorRect: Rect) {
-        targetGlobalVisibleRect.left += target.paddingLeft
-        targetGlobalVisibleRect.right -= target.paddingRight
-        targetGlobalVisibleRect.top -= decorRect.top
-        targetGlobalVisibleRect.bottom -= decorRect.top
+        targetGlobalVisibleRect.left += target.paddingLeft - clipMargin
+        targetGlobalVisibleRect.right += clipMargin - target.paddingRight
+        targetGlobalVisibleRect.top -= decorRect.top - clipMargin
+        targetGlobalVisibleRect.bottom -= decorRect.top + clipMargin
     }
 
     private fun toClipCircle(): ClipCircle {

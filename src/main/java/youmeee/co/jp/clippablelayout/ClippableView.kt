@@ -13,7 +13,7 @@ class ClippableView @JvmOverloads constructor(
 ) : View(context, attributeSet, defStyle) {
 
     private val backGroundPaint = Paint()
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    private val clipPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val porterDuffXferMode: PorterDuffXfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
 
     private var clipList: MutableList<ClipEntry> = mutableListOf()
@@ -26,10 +26,10 @@ class ClippableView @JvmOverloads constructor(
             setLayerType(View.LAYER_TYPE_HARDWARE, null)
 
             canvas.drawRect(0f, 0f, width.toFloat(), height.toFloat(), backGroundPaint)
-            paint.xfermode = porterDuffXferMode
+            clipPaint.xfermode = porterDuffXferMode
 
             w.decorView.getWindowVisibleDisplayFrame(decorRect)
-            clipList.forEach { it.clip(canvas, paint, decorRect) }
+            clipList.forEach { it.clip(canvas, clipPaint, decorRect) }
         }
     }
 
