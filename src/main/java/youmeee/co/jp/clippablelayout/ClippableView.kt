@@ -65,4 +65,6 @@ class ClippableView @JvmOverloads constructor(
     fun setClipViews(vararg entries: ClipEntry) {
         setClipViews(entries.toList())
     }
+
+    fun clear() = clipList.clear()
 }

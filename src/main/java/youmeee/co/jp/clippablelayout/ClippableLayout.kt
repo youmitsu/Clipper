@@ -39,7 +39,10 @@ class ClippableLayout @JvmOverloads constructor(
 
     fun showOverlay() {
         clippableView.setBackGroundColor(resources.getColor(backGroundColorResId))
+        removeView(clippableView)
         addView(clippableView)
         invalidate()
     }
+
+    fun clear() = clippableView.clear()
 }
