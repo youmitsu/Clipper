@@ -2,6 +2,7 @@ package youmeee.co.jp.clippablelayout
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import android.view.Window
 import android.widget.FrameLayout
 
@@ -42,6 +43,10 @@ class ClippableLayout @JvmOverloads constructor(
         removeView(clippableView)
         addView(clippableView)
         invalidate()
+    }
+
+    fun setClickListener(listener: (v: View) -> Unit) {
+        clippableView.setClickListener(listener)
     }
 
     fun clear() = clippableView.clear()

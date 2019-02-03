@@ -20,8 +20,11 @@ class ClippableView @JvmOverloads constructor(
     private val decorRect = Rect()
     var window: Window? = null
 
+    private var listener = { v: View -> visibility = GONE }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        setOnClickListener { v -> listener(v) }
         window?.let { w ->
             setLayerType(View.LAYER_TYPE_HARDWARE, null)
 
@@ -64,6 +67,10 @@ class ClippableView @JvmOverloads constructor(
      */
     fun setClipViews(vararg entries: ClipEntry) {
         setClipViews(entries.toList())
+    }
+
+    fun setClickListener(listener: (v: View) -> Unit) {
+        this.listener = listener
     }
 
     fun clear() = clipList.clear()
