@@ -79,6 +79,5 @@ class ClippableView @JvmOverloads constructor(
     fun showOverlay(parent: ViewGroup) {
         parent.removeView(this)
         parent.addView(this)
-        invalidate()
     }
 }

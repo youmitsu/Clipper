@@ -3,51 +3,32 @@ package youmeee.co.jp.clippablelayout
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.view.Window
+import android.view.ViewGroup
 import android.widget.FrameLayout
 
+/**
+ * ClippableLayout
+ */
 class ClippableLayout @JvmOverloads constructor(
     context: Context,
     attributeSet: AttributeSet? = null,
     defStyle: Int = 0
 ) : FrameLayout(context, attributeSet, defStyle) {
 
-    val clippableView: ClippableView = ClippableView(context, attributeSet, defStyle)
-    private var backGroundColorResId: Int = 0
-    private var transitionEnabled = true
+    var clippableView: ClippableView? = null
+    var descView: View? = null
+    val descLayoutParams = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
 
-    init {
-        val a = context.obtainStyledAttributes(attributeSet, R.styleable.ClippableLayout)
-        try {
-            backGroundColorResId = a.getResourceId(
-                R.styleable.ClippableLayout_backgroundColor,
-                R.color.default_gray
-            )
-            //TODO: transitionの実装
-            transitionEnabled = a.getBoolean(R.styleable.ClippableLayout_transitionEnabled, true)
-        } finally {
-            a.recycle()
-        }
-    }
-
-    fun setWindow(window: Window) {
-        clippableView.window = window
-    }
-
-    fun setClipViews(entryList: List<ClipEntry>) = clippableView.setClipViews(entryList)
-
-    fun setClipViews(vararg entries: ClipEntry) = clippableView.setClipViews(*entries)
-
-    fun showOverlay() {
-        clippableView.setBackGroundColor(resources.getColor(backGroundColorResId))
-        removeView(clippableView)
-        addView(clippableView)
+    fun showOverlay(parent: ViewGroup) {
+        clippableView?.showOverlay(this)
+        descView?.let { addView(it, descLayoutParams) }
+        parent.addView(this)
         invalidate()
     }
 
-    fun setClickListener(listener: (v: View) -> Unit) {
-        clippableView.setClickListener(listener)
+    fun setDescViewGravity(gravity: Int) {
+        descLayoutParams.gravity = gravity
     }
 
-    fun clear() = clippableView.clear()
+    fun clear() = clippableView?.clear()
 }
