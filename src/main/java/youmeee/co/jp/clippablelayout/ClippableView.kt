@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 
 class ClippableView @JvmOverloads constructor(
@@ -74,4 +75,10 @@ class ClippableView @JvmOverloads constructor(
     }
 
     fun clear() = clipList.clear()
+
+    fun showOverlay(parent: ViewGroup) {
+        parent.removeView(this)
+        parent.addView(this)
+        invalidate()
+    }
 }
