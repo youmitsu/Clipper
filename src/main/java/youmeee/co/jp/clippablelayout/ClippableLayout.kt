@@ -17,17 +17,15 @@ class ClippableLayout @JvmOverloads constructor(
 
     var clippableView: ClippableView? = null
     var descView: View? = null
-    val descLayoutParams = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
 
     fun showOverlay(parent: ViewGroup) {
+        setOnClickListener {
+            removeAllViews()
+        }
         clippableView?.showOverlay(this)
-        descView?.let { addView(it, descLayoutParams) }
-        parent.addView(this)
+        descView?.let { addView(it) }
+        parent.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
         invalidate()
-    }
-
-    fun setDescViewGravity(gravity: Int) {
-        descLayoutParams.gravity = gravity
     }
 
     fun clear() = clippableView?.clear()
