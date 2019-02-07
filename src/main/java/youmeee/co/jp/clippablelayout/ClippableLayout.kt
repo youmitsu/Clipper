@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.FrameLayout
 
 /**
@@ -15,19 +16,33 @@ class ClippableLayout @JvmOverloads constructor(
     defStyle: Int = 0
 ) : FrameLayout(context, attributeSet, defStyle) {
 
-    var clippableView: ClippableView? = null
-    var descView: View? = null
-    val descLayoutParams = FrameLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
-
-    fun showOverlay(parent: ViewGroup) {
-        clippableView?.showOverlay(this)
-        descView?.let { addView(it, descLayoutParams) }
-        parent.addView(this)
-        invalidate()
+    constructor(
+        context: Context,
+        attributeSet: AttributeSet? = null,
+        defStyle: Int = 0,
+        window: Window,
+        parent: ViewGroup
+    ) : this(context, attributeSet, defStyle) {
+        this.window = window
+        this.parent = parent
     }
 
-    fun setDescViewGravity(gravity: Int) {
-        descLayoutParams.gravity = gravity
+    private lateinit var window: Window
+    private lateinit var parent: ViewGroup
+    var clippableView: ClippableView? = null
+    var descView: View? = null
+    var backGroundColor: Int = R.color.default_gray
+    var queueDispatcher: ClippableQueueDispatcher? = null
+
+    fun showOverlay() {
+        setOnClickListener {
+            removeAllViews()
+            queueDispatcher?.onDetachedClippableView()
+        }
+        clippableView?.showOverlay(this, window, backGroundColor)
+        descView?.let { addView(it) }
+        parent.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
+        invalidate()
     }
 
     fun clear() = clippableView?.clear()

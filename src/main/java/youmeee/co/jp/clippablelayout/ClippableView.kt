@@ -19,13 +19,10 @@ class ClippableView @JvmOverloads constructor(
 
     private var clipList: MutableList<ClipEntry> = mutableListOf()
     private val decorRect = Rect()
-    var window: Window? = null
-
-    private var listener = { v: View -> visibility = GONE }
+    private var window: Window? = null
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        setOnClickListener { v -> listener(v) }
         window?.let { w ->
             setLayerType(View.LAYER_TYPE_HARDWARE, null)
 
@@ -70,13 +67,11 @@ class ClippableView @JvmOverloads constructor(
         setClipViews(entries.toList())
     }
 
-    fun setClickListener(listener: (v: View) -> Unit) {
-        this.listener = listener
-    }
-
     fun clear() = clipList.clear()
 
-    fun showOverlay(parent: ViewGroup) {
+    fun showOverlay(parent: ViewGroup, _window: Window, backGroundColorResId: Int) {
+        this.window = _window
+        this.setBackGroundColor(backGroundColorResId)
         parent.removeView(this)
         parent.addView(this)
     }
