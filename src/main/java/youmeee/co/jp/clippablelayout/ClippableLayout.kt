@@ -20,19 +20,24 @@ class ClippableLayout @JvmOverloads constructor(
         context: Context,
         attributeSet: AttributeSet? = null,
         defStyle: Int = 0,
-        window: Window
+        window: Window,
+        parent: ViewGroup
     ) : this(context, attributeSet, defStyle) {
         this.window = window
+        this.parent = parent
     }
 
     private lateinit var window: Window
+    private lateinit var parent: ViewGroup
     var clippableView: ClippableView? = null
     var descView: View? = null
     var backGroundColor: Int = R.color.default_gray
+    var queueDispatcher: ClippableQueueDispatcher? = null
 
-    fun showOverlay(parent: ViewGroup) {
+    fun showOverlay() {
         setOnClickListener {
             removeAllViews()
+            queueDispatcher?.onDetachedClippableView()
         }
         clippableView?.showOverlay(this, window, backGroundColor)
         descView?.let { addView(it) }
