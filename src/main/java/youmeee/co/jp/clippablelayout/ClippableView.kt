@@ -7,11 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 
-class ClippableView @JvmOverloads constructor(
-    context: Context,
-    attributeSet: AttributeSet? = null,
-    defStyle: Int = 0
-) : View(context, attributeSet, defStyle) {
+class ClippableView : View {
+
+    constructor(context: Context) : this(context, null)
+
+    constructor(
+        context: Context,
+        attributeSet: AttributeSet?
+    ) : this(context, attributeSet, 0)
+
+    constructor(
+        context: Context,
+        attributeSet: AttributeSet?,
+        defStyle: Int
+    ) : super(context, attributeSet, defStyle)
 
     private val backGroundPaint = Paint()
     private val clipPaint = Paint(Paint.ANTI_ALIAS_FLAG)

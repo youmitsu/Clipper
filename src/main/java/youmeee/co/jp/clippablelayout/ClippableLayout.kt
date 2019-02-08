@@ -10,39 +10,41 @@ import android.widget.FrameLayout
 /**
  * ClippableLayout
  */
-class ClippableLayout @JvmOverloads constructor(
-    context: Context,
-    attributeSet: AttributeSet? = null,
-    defStyle: Int = 0
-) : FrameLayout(context, attributeSet, defStyle) {
+class ClippableLayout : FrameLayout {
+
+    constructor(context: Context) : this(context, null)
 
     constructor(
         context: Context,
-        attributeSet: AttributeSet? = null,
-        defStyle: Int = 0,
-        window: Window,
-        parent: ViewGroup
-    ) : this(context, attributeSet, defStyle) {
-        this.window = window
-        this.parent = parent
-    }
+        attrs: AttributeSet?
+    ) : this(context, attrs, 0)
 
-    private lateinit var window: Window
-    private lateinit var parent: ViewGroup
+    constructor(
+        context: Context,
+        attrs: AttributeSet?,
+        defStyle: Int
+    ) : super(context, attrs, defStyle)
+
+    var window: Window? = null
+    var parent: ViewGroup? = null
     var clippableView: ClippableView? = null
     var descView: View? = null
     var backGroundColor: Int = R.color.default_gray
     var queueDispatcher: ClippableQueueDispatcher? = null
 
     fun showOverlay() {
-        setOnClickListener {
-            removeAllViews()
-            queueDispatcher?.onDetachedClippableView()
+        window?.let { w ->
+            parent?.let { p ->
+                setOnClickListener {
+                    removeAllViews()
+                    queueDispatcher?.onDetachedClippableView()
+                }
+                clippableView?.showOverlay(this, w, backGroundColor)
+                descView?.let { addView(it) }
+                p.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
+                invalidate()
+            }
         }
-        clippableView?.showOverlay(this, window, backGroundColor)
-        descView?.let { addView(it) }
-        parent.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
-        invalidate()
     }
 
     fun clear() = clippableView?.clear()
