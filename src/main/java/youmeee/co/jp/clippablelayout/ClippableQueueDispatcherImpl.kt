@@ -1,27 +1,29 @@
 package youmeee.co.jp.clippablelayout
 
+import android.view.ViewGroup
+import android.view.Window
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
-class ClippableQueueDispatcherImpl : ClippableQueueDispatcher {
+class ClippableQueueDispatcherImpl(val window: Window, val parent: ViewGroup) : ClippableQueueDispatcher {
 
-    private val clippableLayoutQueue: Queue<ClippableLayout> = LinkedBlockingQueue()
+    private val clippableLayoutQueue: Queue<ClippableItem> = LinkedBlockingQueue()
 
-    fun add(clippableLayout: ClippableLayout) {
-        clippableLayout.queueDispatcher = this
-        clippableLayoutQueue.add(clippableLayout)
+    override fun add(clippableItem: ClippableItem) {
+        clippableItem.clippableLayout.queueDispatcher = this
+        clippableLayoutQueue.add(clippableItem)
     }
 
-    fun addAll(vararg clippableLayoutList: ClippableLayout) {
+    fun addAll(vararg clippableLayoutList: ClippableItem) {
         clippableLayoutList.forEach { add(it) }
     }
 
-    fun addAll(clippableLayoutList: MutableList<ClippableLayout>) {
+    fun addAll(clippableLayoutList: List<ClippableItem>) {
         clippableLayoutList.forEach { add(it) }
     }
 
-    fun execute() {
-        clippableLayoutQueue.poll()?.let { it.showOverlay() }
+    override fun execute() {
+        clippableLayoutQueue.poll()?.let { it.clippableLayout.showOverlay(window, parent) }
     }
 
     override fun onDetachedClippableView() {
