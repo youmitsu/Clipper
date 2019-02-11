@@ -41,27 +41,27 @@ dependencies {
 1. Create the `ClipEntry` instance. `ClipEntry` includes the object to be clipped and its margin. I prepared shapes(eg. circle, rect, and custom) to clip.
 
 ```kotlin
-            val circleEntry = CircleClipEntry(textView, resources.getDimension(R.dimen.circle_clip_margin))
-            val rectEntry = RectClipEntry(textView2, resources.getDimension(R.dimen.circle_clip_margin))
+val circleEntry = CircleClipEntry(textView, resources.getDimension(R.dimen.circle_clip_margin))
+val rectEntry = RectClipEntry(textView2, resources.getDimension(R.dimen.circle_clip_margin))
 ```
 
 2. Create and inflate `ViewGroup` to describe the object to be clipped.
 
 ```kotlin
-            val tutorialDescView = layoutInflater.inflate(R.layout.clippable_description, null)
+val tutorialDescView = layoutInflater.inflate(R.layout.clippable_description, null)
 ```
 
 3. Create the `ClippableItem`. To initialize it, you should use the `Context` and the list of `ClipEntry`, ViewGroup to describe with constructor.
 
 ```kotlin
-            val tutorialWindow1 = ClippableItem(this, listOf(circleEntry, rectEntry))
-            val tutorialWindow2 = ClippableItem(this, listOf(rectEntry), imageView)
+val tutorialWindow1 = ClippableItem(this, listOf(circleEntry, rectEntry))
+val tutorialWindow2 = ClippableItem(this, listOf(rectEntry), imageView)
 ```
 
 4. Finally, Create the `ClipExecutor` instance with `ClipExecutorFactory`. Once you call `execute()` method, the clipping is immediately executed.
 
 ```kotlin
-            ClipExecutorFactory.create(listOf(tutorialWindow1, tutorialWindow2), window, container).execute()
+ClipExecutorFactory.create(listOf(tutorialWindow1, tutorialWindow2), window, container).execute()
 ```
 
 ## Licence
