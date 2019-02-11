@@ -1,5 +1,5 @@
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
-[](https://img.shields.io/badge/version-0.1.2-green.svg)
+![versionBadge](https://img.shields.io/badge/version-0.1.2-green.svg)
 
 # ClippableLayout
 
