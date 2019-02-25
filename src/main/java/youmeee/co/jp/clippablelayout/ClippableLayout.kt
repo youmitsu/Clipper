@@ -32,7 +32,7 @@ class ClippableLayout : FrameLayout {
 
     fun showOverlay(w: Window, p: ViewGroup) {
         setOnClickListener {
-            removeAllViews()
+            (parent as? ViewGroup)?.removeView(this)
             queueDispatcher?.onDetachedClippableView()
         }
         clippableView?.showOverlay(this, w, backGroundColor)

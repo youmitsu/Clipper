@@ -3,7 +3,7 @@ package youmeee.co.jp.clippablelayout
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
-import android.support.annotation.IdRes
+import androidx.annotation.IdRes
 
 abstract class ClipEntry(@IdRes val resId: Int) {
 
