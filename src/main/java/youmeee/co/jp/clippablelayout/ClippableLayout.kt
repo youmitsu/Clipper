@@ -2,7 +2,6 @@ package youmeee.co.jp.clippablelayout
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
@@ -26,7 +25,7 @@ class ClippableLayout : FrameLayout {
     ) : super(context, attrs, defStyle)
 
     var clippableView: ClippableView? = null
-    var descView: View? = null
+    var descView: DescriptionView? = null
     var backGroundColor: Int = R.color.default_gray
     var queueDispatcher: ClippableQueueDispatcher? = null
 
@@ -36,9 +35,8 @@ class ClippableLayout : FrameLayout {
             queueDispatcher?.onDetachedClippableView()
         }
         clippableView?.showOverlay(this, w, backGroundColor)
-        descView?.let { addView(it) }
+        descView?.let { addView(it.descView, it.lp) }
         p.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
         invalidate()
     }
-
 }
