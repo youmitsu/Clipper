@@ -1,5 +1,5 @@
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
-![versionBadge](https://img.shields.io/badge/version-0.1.2-green.svg)
+![versionBadge](https://img.shields.io/badge/version-0.1.5-green.svg)
 
 # ClippableLayout
 
@@ -55,7 +55,7 @@ val tutorialDescView = layoutInflater.inflate(R.layout.clippable_description, nu
 
 ```kotlin
 val tutorialWindow1 = ClippableItem(this, listOf(circleEntry, rectEntry))
-val tutorialWindow2 = ClippableItem(this, listOf(rectEntry), imageView)
+val tutorialWindow2 = ClippableItem(this, rectEntry, imageView)
 ```
 
 4. Finally, Create the `ClipExecutor` instance with `ClipExecutorFactory`. Once you call `execute()` method, the clipping is immediately executed.
