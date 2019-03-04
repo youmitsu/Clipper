@@ -9,9 +9,9 @@ class ClippableQueueDispatcherImpl(val window: Window, val parent: ViewGroup) : 
 
     private val clippableLayoutQueue: Queue<ClippableItem> = LinkedBlockingQueue()
 
-    override fun add(clippableItem: ClippableItem) {
-        clippableItem.clippableLayout.queueDispatcher = this
-        clippableLayoutQueue.add(clippableItem)
+    override fun add(clippableLayout: ClippableItem) {
+        clippableLayout.clippableLayout.queueDispatcher = this
+        clippableLayoutQueue.add(clippableLayout)
     }
 
     fun addAll(vararg clippableLayoutList: ClippableItem) {
@@ -23,7 +23,7 @@ class ClippableQueueDispatcherImpl(val window: Window, val parent: ViewGroup) : 
     }
 
     override fun execute() {
-        clippableLayoutQueue.poll()?.let { it.clippableLayout.showOverlay(window, parent) }
+        clippableLayoutQueue.poll()?.clippableLayout?.showOverlay(window, parent)
     }
 
     override fun onDetachedClippableView() {

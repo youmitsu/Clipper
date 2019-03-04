@@ -5,26 +5,17 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
 
-class RectClipEntry() : ClipEntry() {
+class RectClipEntry(override val targetView: View?) : ClipEntry() {
 
-    private var target: View? = null
     private val targetGlobalVisibleRect = Rect()
     private var clipMargin: Int = 0
-
-    constructor(target: View) : this() {
-        this.target = target
-    }
 
     constructor(target: View, clipMargin: Float) : this(target) {
         this.clipMargin = clipMargin.toInt()
     }
 
-    constructor(resId: Int) : this() {
-        //TODO
-    }
-
     override fun clip(canvas: Canvas, paint: Paint, decorRect: Rect) {
-        target?.let {
+        targetView?.let {
             it.getGlobalVisibleRect(targetGlobalVisibleRect)
             adjustRectPosition(it, decorRect)
             canvas.drawRect(targetGlobalVisibleRect, paint)

@@ -3,12 +3,10 @@ package youmeee.co.jp.clippablelayout
 import android.view.ViewGroup
 import android.view.Window
 
-class ClipExecutor(val queueDispatcher: ClippableQueueDispatcher) : AbstractClipExecutor() {
-
+class ClipExecutor(private val queueDispatcher: ClippableQueueDispatcher) : AbstractClipExecutor() {
     override fun execute() {
         queueDispatcher.execute()
     }
-
 }
 
 object ClipExecutorFactory {
