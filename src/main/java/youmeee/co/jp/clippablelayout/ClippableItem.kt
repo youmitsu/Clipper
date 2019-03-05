@@ -1,5 +1,6 @@
 package youmeee.co.jp.clippablelayout
 
+import android.animation.ObjectAnimator
 import android.content.Context
 
 class ClippableItem private constructor(context: Context) {
@@ -12,6 +13,10 @@ class ClippableItem private constructor(context: Context) {
         clippableLayout.apply {
             this.clippableView = ClippableView(context).also { it.setClipViews(clipEntries) }
             this.descView = _descView
+        }
+        ObjectAnimator.ofFloat(clippableLayout, "alpha", 0f, 1f).apply {
+            duration = 1500
+            start()
         }
     }
 
