@@ -1,9 +1,10 @@
 package youmeee.co.jp.clippablelayout
 
-import android.animation.ObjectAnimator
 import android.content.Context
 
 class ClippableItem private constructor(context: Context) {
+
+    internal val clippableLayout = ClippableLayout(context)
 
     constructor(context: Context, clipEntry: ClipEntry) : this(context, listOf(clipEntry))
 
@@ -14,11 +15,5 @@ class ClippableItem private constructor(context: Context) {
             this.clippableView = ClippableView(context).also { it.setClipViews(clipEntries) }
             this.descView = _descView
         }
-        ObjectAnimator.ofFloat(clippableLayout, "alpha", 0f, 1f).apply {
-            duration = 1500
-            start()
-        }
     }
-
-    internal val clippableLayout = ClippableLayout(context)
 }
