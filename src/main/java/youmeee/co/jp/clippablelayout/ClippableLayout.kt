@@ -29,7 +29,7 @@ class ClippableLayout : FrameLayout {
     var descView: DescriptionView? = null
     var backGroundColor: Int = R.color.default_gray
     var queueDispatcher: ClippableQueueDispatcher? = null
-    var clipAnimator = ClipAnimator(AnimationType.DEFAULT)
+    var clipAnimator: ClipAnimator? = null
 
     fun showOverlay(w: Window, p: ViewGroup) {
         setOnClickListener {
@@ -44,19 +44,23 @@ class ClippableLayout : FrameLayout {
     }
 }
 
-interface Animator {
+interface ClipAnimator {
     fun animateClip(targetLayout: ClippableLayout)
 }
 
-class ClipAnimator(animationType: AnimationType) : Animator {
-
+class defaultClipAnimator : ClipAnimator {
     override fun animateClip(targetLayout: ClippableLayout) {
         ObjectAnimator.ofFloat(targetLayout, "alpha", 0f, 1f).apply {
             duration = 300
             start()
         }
     }
+}
 
+class zoomClipAnimator : ClipAnimator {
+    override fun animateClip(targetLayout: ClippableLayout) {
+//        ViewAnimationUtils.createCircularReveal(targetLayout.parent as View, targetLayout.width, targetLayout.height, )
+    }
 }
 
 sealed class AnimationType {
