@@ -34,7 +34,7 @@ class ClippableLayout : FrameLayout {
     var descView: DescriptionView? = null
     var backGroundColor: Int = R.color.default_gray
     var queueDispatcher: ClippableQueueDispatcher? = null
-    var clipAnimator: ClipAnimator? = null
+    var clipAnimator: ClipAnimator? = DefaultClipAnimator(this)
 
     fun showOverlay(w: Window, p: ViewGroup) {
         setOnClickListener {
@@ -43,7 +43,6 @@ class ClippableLayout : FrameLayout {
         }
         clippableView?.showOverlay(this, w, backGroundColor)
         descView?.let { addView(it.descView, it.lp) }
-        clipAnimator = ZoomClipAnimator(this)
         p.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
     }
 
@@ -58,11 +57,11 @@ abstract class ClipAnimator(val targetLayout: ClippableLayout) {
     abstract fun animateClip()
 }
 
-class DefaultClipAnimator(targetLayout: ClippableLayout, private val startAlpha: Float, private val endAlpha: Float) :
+class DefaultClipAnimator(targetLayout: ClippableLayout, private val duration: Int = 300) :
     ClipAnimator(targetLayout) {
     override fun animateClip() {
-        ObjectAnimator.ofFloat(targetLayout, "alpha", startAlpha, endAlpha).apply {
-            duration = 300
+        ObjectAnimator.ofFloat(targetLayout, "alpha", 0f, 1f).apply {
+            duration = this.duration
             start()
         }
     }
@@ -70,8 +69,8 @@ class DefaultClipAnimator(targetLayout: ClippableLayout, private val startAlpha:
 
 class ZoomClipAnimator(
     targetLayout: ClippableLayout,
-    val duration: Long = 1000L,
-    val interpolator: Interpolator = AccelerateInterpolator()
+    private val duration: Long = 1000L,
+    private val interpolator: Interpolator = AccelerateInterpolator()
 ) : ClipAnimator(targetLayout) {
     override fun animateClip() {
         val targetClipView: View? = targetLayout.clippableView?.clipList?.firstOrNull()?.targetView
@@ -95,8 +94,8 @@ class ZoomClipAnimator(
             ).toFloat(),
             radius
         )
-        interpolator?.let { animator.interpolator = it }
-        animator.duration = duration
+        animator.interpolator = this.interpolator
+        animator.duration = this.duration
         animator.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(animation: Animator?) {
             }
