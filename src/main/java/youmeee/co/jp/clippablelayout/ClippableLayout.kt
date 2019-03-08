@@ -1,7 +1,6 @@
 package youmeee.co.jp.clippablelayout
 
 import android.content.Context
-import android.util.AttributeSet
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
@@ -9,20 +8,16 @@ import android.widget.FrameLayout
 /**
  * ClippableLayout
  */
-class ClippableLayout : FrameLayout {
+class ClippableLayout private constructor(context: Context) : FrameLayout(context) {
 
-    constructor(context: Context) : this(context, null)
+    constructor(context: Context, clipEntry: ClipEntry) : this(context, listOf(clipEntry))
 
-    constructor(
-        context: Context,
-        attrs: AttributeSet?
-    ) : this(context, attrs, 0)
+    constructor(context: Context, clipEntries: List<ClipEntry>) : this(context, clipEntries, null)
 
-    constructor(
-        context: Context,
-        attrs: AttributeSet?,
-        defStyle: Int
-    ) : super(context, attrs, defStyle)
+    constructor(context: Context, clipEntries: List<ClipEntry>, _descView: DescriptionView?) : this(context) {
+        this.clippableView = ClippableView(context).also { it.setClipViews(clipEntries) }
+        this.descView = _descView
+    }
 
     var clippableView: ClippableView? = null
     var descView: DescriptionView? = null
