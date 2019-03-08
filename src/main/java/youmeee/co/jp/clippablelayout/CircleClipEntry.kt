@@ -5,7 +5,7 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.view.View
 
-class CircleClipEntry(override val targetView: View?) : ClipEntry() {
+class CircleClipEntry(override val targetView: View) : ClipEntry() {
 
     private val targetGlobalVisibleRect = Rect()
     private var clipMargin: Int = 0
@@ -15,7 +15,7 @@ class CircleClipEntry(override val targetView: View?) : ClipEntry() {
     }
 
     override fun clip(canvas: Canvas, paint: Paint, decorRect: Rect) {
-        targetView?.let {
+        targetView.let {
             it.getGlobalVisibleRect(targetGlobalVisibleRect)
             adjustRectPosition(it, decorRect)
             val clipCircle = toClipCircle()
