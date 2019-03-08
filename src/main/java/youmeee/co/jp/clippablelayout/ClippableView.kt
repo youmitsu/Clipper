@@ -26,7 +26,7 @@ class ClippableView : View {
     private val clipPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private val porterDuffXferMode: PorterDuffXfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
 
-    private var clipList: MutableList<ClipEntry> = mutableListOf()
+    var clipList: MutableList<ClipEntry> = mutableListOf()
     private val decorRect = Rect()
     private var window: Window? = null
 
