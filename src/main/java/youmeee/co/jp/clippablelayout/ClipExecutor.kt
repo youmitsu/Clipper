@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import android.view.Window
 
 class ClipExecutor(private val queueDispatcher: ClippableQueueDispatcher) {
+
     fun execute() {
         queueDispatcher.execute()
     }
