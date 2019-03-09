@@ -3,8 +3,8 @@ package youmeee.co.jp.clippablelayout
 import android.view.ViewGroup
 import android.view.Window
 
-class ClipExecutor(private val queueDispatcher: ClippableQueueDispatcher) : AbstractClipExecutor() {
-    override fun execute() {
+class ClipExecutor(private val queueDispatcher: ClippableQueueDispatcher) {
+    fun execute() {
         queueDispatcher.execute()
     }
 }
@@ -17,9 +17,9 @@ object ClipExecutorFactory {
         parent: ViewGroup
     ): ClippableQueueDispatcher = ClippableQueueDispatcherImpl(window, parent).apply { addAll(clipItems) }
 
-    fun create(vararg clipItem: ClippableLayout, window: Window, parent: ViewGroup): ClipExecutor =
+    fun create(parent: ViewGroup, window: Window, vararg clipItem: ClippableLayout): ClipExecutor =
         ClipExecutor(initQueueDispatcher(clipItem.toList(), window, parent))
 
-    fun create(clipItems: List<ClippableLayout>, window: Window, parent: ViewGroup): ClipExecutor =
+    fun create(parent: ViewGroup, window: Window, clipItems: List<ClippableLayout>): ClipExecutor =
         ClipExecutor(initQueueDispatcher(clipItems, window, parent))
 }
