@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.core.content.ContextCompat
 
 class ClippableView : View {
 
@@ -43,8 +44,8 @@ class ClippableView : View {
         }
     }
 
-    fun setBackGroundColor(color: Int) {
-        backGroundPaint.color = color
+    fun setBackGroundColor(resId: Int) {
+        backGroundPaint.color = ContextCompat.getColor(context, resId)
     }
 
     /**

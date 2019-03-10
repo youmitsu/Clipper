@@ -23,7 +23,7 @@ class ClippableQueueDispatcherImpl(val window: Window, val parent: ViewGroup) : 
     }
 
     override fun execute() {
-        clippableLayoutQueue.poll()?.showOverlay(window, parent)
+        clippableLayoutQueue.poll()?.clip(parent, window)
     }
 
     override fun onDetachedClippableView() {
