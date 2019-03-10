@@ -20,7 +20,7 @@ class ClippableLayout private constructor(context: Context) : FrameLayout(contex
         this.descView = _descView
     }
 
-    private var clippableView: ClippableView? = null
+    var clippableView: ClippableView? = null
     private var descView: DescriptionView? = null
     var backGroundColor: Int = R.color.default_gray
     var queueDispatcher: ClippableQueueDispatcher? = null
