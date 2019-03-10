@@ -1,6 +1,7 @@
 package youmeee.co.jp.clippablelayout
 
 import android.content.Context
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
@@ -20,23 +21,28 @@ class ClippableLayout private constructor(context: Context) : FrameLayout(contex
     }
 
     var clippableView: ClippableView? = null
-    var descView: DescriptionView? = null
+    private var descView: DescriptionView? = null
     var backGroundColor: Int = R.color.default_gray
     var queueDispatcher: ClippableQueueDispatcher? = null
     var clipAnimator: ClipAnimator? = DefaultClipAnimator(this)
-
-    fun showOverlay(w: Window, p: ViewGroup) {
-        setOnClickListener {
-            (parent as? ViewGroup)?.removeView(this)
-            queueDispatcher?.onDetachedClippableView()
-        }
-        clippableView?.showOverlay(this, w, backGroundColor)
-        descView?.let { addView(it.descView, it.lp) }
-        p.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
-    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         clipAnimator?.animateClip()
     }
+
+    fun clip(container: ViewGroup, window: Window) {
+        setOnClickListener {
+            (parent as? ViewGroup)?.removeView(this)
+            queueDispatcher?.onDetachedClippableView()
+        }
+        clippableView?.showOverlay(this, window, backGroundColor)
+        descView?.let { addView(it.descView, it.lp) }
+        container.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
+    }
+
+    inner class DescriptionView(
+        val descView: View,
+        val lp: FrameLayout.LayoutParams
+    )
 }
