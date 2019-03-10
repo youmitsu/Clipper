@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 7
-        versionName "1.6"
+        versionCode 8
+        versionName "1.7"
         version = android.defaultConfig.versionName
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -53,7 +53,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '0.1.6'
+            pom.version = '0.1.7'
             pom.groupId = 'youmeee.co.jp'
             pom.artifactId = 'clippablelayout'
         }
