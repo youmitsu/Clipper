@@ -1,6 +1,7 @@
 package youmeee.co.jp.clippablelayout
 
 import android.content.Context
+import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
@@ -19,8 +20,8 @@ class ClippableLayout private constructor(context: Context) : FrameLayout(contex
         this.descView = _descView
     }
 
-    var clippableView: ClippableView? = null
-    var descView: DescriptionView? = null
+    private var clippableView: ClippableView? = null
+    private var descView: DescriptionView? = null
     var backGroundColor: Int = R.color.default_gray
     var queueDispatcher: ClippableQueueDispatcher? = null
     var clipAnimator: ClipAnimator? = DefaultClipAnimator(this)
@@ -39,4 +40,9 @@ class ClippableLayout private constructor(context: Context) : FrameLayout(contex
         descView?.let { addView(it.descView, it.lp) }
         container.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
     }
+
+    inner class DescriptionView(
+        val descView: View,
+        val lp: FrameLayout.LayoutParams
+    )
 }
