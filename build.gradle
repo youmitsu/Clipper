@@ -53,9 +53,9 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '0.2.0'
-            pom.groupId = 'youmeee.co.jp'
-            pom.artifactId = 'clippablelayout'
+            pom.version = '0.2.1'
+            pom.groupId = 'jp.co.youmitsu'
+            pom.artifactId = 'clipper'
         }
     }
 }
