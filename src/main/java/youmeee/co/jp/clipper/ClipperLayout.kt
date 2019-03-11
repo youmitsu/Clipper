@@ -40,9 +40,9 @@ class ClipperLayout private constructor(context: Context) : FrameLayout(context)
         descView?.let { addView(it.descView, it.lp) }
         container.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
     }
-
-    inner class DescriptionView(
-        val descView: View,
-        val lp: FrameLayout.LayoutParams
-    )
 }
+
+class DescriptionView(
+    val descView: View,
+    val lp: FrameLayout.LayoutParams
+)
