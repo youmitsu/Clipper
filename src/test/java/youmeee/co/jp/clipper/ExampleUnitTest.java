@@ -1,4 +1,4 @@
-package youmeee.co.jp.clippablelayout;
+package youmeee.co.jp.clipper;
 
 import org.junit.Test;
 

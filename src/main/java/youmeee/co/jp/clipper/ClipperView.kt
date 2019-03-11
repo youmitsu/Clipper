@@ -1,4 +1,4 @@
-package youmeee.co.jp.clippablelayout
+package youmeee.co.jp.clipper
 
 import android.content.Context
 import android.graphics.*
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.core.content.ContextCompat
 
-class ClippableView : View {
+class ClipperView : View {
 
     constructor(context: Context) : this(context, null)
 

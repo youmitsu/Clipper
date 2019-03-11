@@ -1,4 +1,4 @@
-package youmeee.co.jp.clippablelayout
+package youmeee.co.jp.clipper
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
@@ -7,13 +7,13 @@ import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Interpolator
 
-abstract class ClipAnimator(val targetLayout: ClippableLayout) {
-    abstract fun animateClip()
+abstract class ClipAnimator {
+    abstract fun animateClip(targetLayout: ClipperLayout)
 }
 
-class DefaultClipAnimator(targetLayout: ClippableLayout, private val duration: Int = 300) :
-    ClipAnimator(targetLayout) {
-    override fun animateClip() {
+class DefaultClipAnimator(private val duration: Int = 250) :
+    ClipAnimator() {
+    override fun animateClip(targetLayout: ClipperLayout) {
         ObjectAnimator.ofFloat(targetLayout, "alpha", 0f, 1f).apply {
             duration = this.duration
             start()
@@ -22,12 +22,11 @@ class DefaultClipAnimator(targetLayout: ClippableLayout, private val duration: I
 }
 
 class CircleRevealClipAnimator(
-    targetLayout: ClippableLayout,
     private val duration: Long = 250L,
     private val interpolator: Interpolator = AccelerateInterpolator()
-) : ClipAnimator(targetLayout) {
-    override fun animateClip() {
-        val targetClipView: View? = targetLayout.clippableView?.clipList?.firstOrNull()?.targetView
+) : ClipAnimator() {
+    override fun animateClip(targetLayout: ClipperLayout) {
+        val targetClipView: View? = targetLayout.clipperView?.clipList?.firstOrNull()?.targetView
         val centerX: Int =
             if (targetClipView == null) targetLayout.measuredWidth / 2 else (targetClipView.right + targetClipView.left) / 2
         val centerY: Int =
