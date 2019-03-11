@@ -24,11 +24,11 @@ class ClipperLayout private constructor(context: Context) : FrameLayout(context)
     private var descView: DescriptionView? = null
     var backGroundColor: Int = R.color.default_gray
     var queueDispatcher: ClipperQueueDispatcher? = null
-    var clipAnimator: ClipAnimator? = DefaultClipAnimator(this)
+    var clipAnimator: ClipAnimator? = null
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        clipAnimator?.animateClip()
+        clipAnimator?.animateClip(this)
     }
 
     fun clip(container: ViewGroup, window: Window) {
