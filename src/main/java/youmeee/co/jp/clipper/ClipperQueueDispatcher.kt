@@ -1,7 +1,7 @@
 package youmeee.co.jp.clipper
 
-interface ClippableQueueDispatcher {
-    fun add(clippableLayout: ClippableLayout)
+interface ClipperQueueDispatcher {
+    fun add(clipperLayout: ClipperLayout)
     fun execute()
     fun onDetachedClippableView()
 }

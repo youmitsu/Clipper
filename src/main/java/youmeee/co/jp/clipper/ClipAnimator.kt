@@ -7,11 +7,11 @@ import android.view.ViewAnimationUtils
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.Interpolator
 
-abstract class ClipAnimator(val targetLayout: ClippableLayout) {
+abstract class ClipAnimator(val targetLayout: ClipperLayout) {
     abstract fun animateClip()
 }
 
-class DefaultClipAnimator(targetLayout: ClippableLayout, private val duration: Int = 300) :
+class DefaultClipAnimator(targetLayout: ClipperLayout, private val duration: Int = 300) :
     ClipAnimator(targetLayout) {
     override fun animateClip() {
         ObjectAnimator.ofFloat(targetLayout, "alpha", 0f, 1f).apply {
@@ -22,12 +22,12 @@ class DefaultClipAnimator(targetLayout: ClippableLayout, private val duration: I
 }
 
 class CircleRevealClipAnimator(
-    targetLayout: ClippableLayout,
+    targetLayout: ClipperLayout,
     private val duration: Long = 250L,
     private val interpolator: Interpolator = AccelerateInterpolator()
 ) : ClipAnimator(targetLayout) {
     override fun animateClip() {
-        val targetClipView: View? = targetLayout.clippableView?.clipList?.firstOrNull()?.targetView
+        val targetClipView: View? = targetLayout.clipperView?.clipList?.firstOrNull()?.targetView
         val centerX: Int =
             if (targetClipView == null) targetLayout.measuredWidth / 2 else (targetClipView.right + targetClipView.left) / 2
         val centerY: Int =

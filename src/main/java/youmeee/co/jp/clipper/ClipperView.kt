@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.core.content.ContextCompat
 
-class ClippableView : View {
+class ClipperView : View {
 
     constructor(context: Context) : this(context, null)
 

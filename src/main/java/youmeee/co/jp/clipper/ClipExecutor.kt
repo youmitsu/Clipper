@@ -3,7 +3,7 @@ package youmeee.co.jp.clipper
 import android.view.ViewGroup
 import android.view.Window
 
-class ClipExecutor(private val queueDispatcher: ClippableQueueDispatcher) {
+class ClipExecutor(private val queueDispatcher: ClipperQueueDispatcher) {
 
     fun execute() {
         queueDispatcher.execute()
@@ -13,14 +13,14 @@ class ClipExecutor(private val queueDispatcher: ClippableQueueDispatcher) {
 object ClipExecutorFactory {
 
     private fun initQueueDispatcher(
-        clipItems: List<ClippableLayout>,
+        clipItems: List<ClipperLayout>,
         window: Window,
         parent: ViewGroup
-    ): ClippableQueueDispatcher = ClippableQueueDispatcherImpl(window, parent).apply { addAll(clipItems) }
+    ): ClipperQueueDispatcher = ClipperQueueDispatcherImpl(window, parent).apply { addAll(clipItems) }
 
-    fun create(parent: ViewGroup, window: Window, vararg clipItem: ClippableLayout): ClipExecutor =
+    fun create(parent: ViewGroup, window: Window, vararg clipItem: ClipperLayout): ClipExecutor =
         ClipExecutor(initQueueDispatcher(clipItem.toList(), window, parent))
 
-    fun create(parent: ViewGroup, window: Window, clipItems: List<ClippableLayout>): ClipExecutor =
+    fun create(parent: ViewGroup, window: Window, clipItems: List<ClipperLayout>): ClipExecutor =
         ClipExecutor(initQueueDispatcher(clipItems, window, parent))
 }
