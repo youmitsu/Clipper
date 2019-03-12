@@ -10,22 +10,28 @@ import youmeee.co.jp.clipper.R
 /**
  * ClipperLayout
  */
-class ClipperLayout private constructor(context: Context) : FrameLayout(context) {
+class ClipperLayout constructor(context: Context) : FrameLayout(context) {
 
-    constructor(context: Context, clipEntry: ClipEntry) : this(context, listOf(clipEntry))
-
-    constructor(context: Context, clipEntries: List<ClipEntry>) : this(context, clipEntries, null)
-
-    constructor(context: Context, clipEntries: List<ClipEntry>, _descView: DescriptionView?) : this(context) {
-        this.clipperView = ClipperView(context).also { it.setClipViews(clipEntries) }
-        this.descView = _descView
-    }
-
-    var clipperView: ClipperView? = null
-    private var descView: DescriptionView? = null
+    internal var clipperView: ClipperView = ClipperView(context)
+    var clipEntries: MutableList<ClipEntry> = mutableListOf()
+    var descView: DescriptionView? = null
     var backGroundColor: Int = R.color.default_gray
     var queueDispatcher: ClipperQueueDispatcher? = null
     var clipAnimator: ClipAnimator? = null
+
+    fun add(clipEntry: ClipEntry) {
+        clipEntries.add(clipEntry)
+    }
+
+    fun add(vararg clipEntry: ClipEntry) {
+        this.add(clipEntry.toList())
+    }
+
+    fun add(entries: List<ClipEntry>) {
+        for (entry in entries) {
+            clipEntries.add(entry)
+        }
+    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -33,13 +39,14 @@ class ClipperLayout private constructor(context: Context) : FrameLayout(context)
     }
 
     fun clip(container: ViewGroup, window: Window) {
+        clipperView.setClipViews(clipEntries)
+        clipperView.showOverlay(this, window, backGroundColor)
+        descView?.let { addView(it.descView, it.lp) }
+        container.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
         setOnClickListener {
             (parent as? ViewGroup)?.removeView(this)
             queueDispatcher?.onDetachedClippableView()
         }
-        clipperView?.showOverlay(this, window, backGroundColor)
-        descView?.let { addView(it.descView, it.lp) }
-        container.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
     }
 }
 
