@@ -16,8 +16,9 @@ class ClipperLayout constructor(context: Context) : FrameLayout(context) {
     var clipEntries: MutableList<ClipEntry> = mutableListOf()
     var descView: DescriptionView? = null
     var backGroundColor: Int = R.color.default_gray
-    var queueDispatcher: ClipperQueueDispatcher? = null
     var clipAnimator: ClipAnimator? = null
+
+    internal var queueDispatcher: ClipperQueueDispatcher? = null
 
     fun add(clipEntry: ClipEntry) {
         clipEntries.add(clipEntry)
