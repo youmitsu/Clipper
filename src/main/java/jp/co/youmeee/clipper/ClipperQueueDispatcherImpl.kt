@@ -1,11 +1,12 @@
-package youmeee.co.jp.clipper
+package jp.co.youmeee.clipper
 
 import android.view.ViewGroup
 import android.view.Window
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
-class ClipperQueueDispatcherImpl(val window: Window, val parent: ViewGroup) : ClipperQueueDispatcher {
+class ClipperQueueDispatcherImpl(val window: Window, val parent: ViewGroup) :
+    ClipperQueueDispatcher {
 
     private val clipperLayoutQueue: Queue<ClipperLayout> = LinkedBlockingQueue()
 

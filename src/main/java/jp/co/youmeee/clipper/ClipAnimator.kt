@@ -1,4 +1,4 @@
-package youmeee.co.jp.clipper
+package jp.co.youmeee.clipper
 
 import android.animation.Animator
 import android.animation.ObjectAnimator

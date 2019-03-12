@@ -1,10 +1,11 @@
-package youmeee.co.jp.clipper
+package jp.co.youmeee.clipper
 
 import android.content.Context
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.FrameLayout
+import youmeee.co.jp.clipper.R
 
 /**
  * ClipperLayout
