@@ -19,7 +19,7 @@ In that cases, This library helps you implement it.
 ## Requirements
 
 
-- Android API Level: 19 to use
+- Android API Level: 21 to use
 
 ## Getting Started
 
