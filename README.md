@@ -1,10 +1,10 @@
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
-![versionBadge](https://img.shields.io/badge/version-0.1.5-green.svg)
+![versionBadge](https://img.shields.io/badge/version-0.3.2-green.svg)
 
-# ClippableLayout
+# Clipper
 
 
-The layout of Android development to be used for clipping view by specific shape(eg. circle, rectangle, custom shape).
+A library of Android development to be used for clipping view by specific shape(eg. circle, rectangle, custom shape).
 
 
 ## Abstract
