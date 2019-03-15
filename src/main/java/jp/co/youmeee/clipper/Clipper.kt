@@ -3,7 +3,6 @@ package jp.co.youmeee.clipper
 import android.view.ViewGroup
 import android.view.Window
 
-
 object Clipper {
 
     private fun initQueueDispatcher(
