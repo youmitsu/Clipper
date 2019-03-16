@@ -44,17 +44,28 @@ class ClipperLayout constructor(context: Context) : FrameLayout(context) {
     fun clip(container: ViewGroup, window: Window) {
         clipperView.setClipViews(clipEntries)
         clipperView.showOverlay(this, window, backGroundColor)
-        descView?.let { addView(it.descView, it.lp) }
-        container.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
-        setOnClickListener {
-            (parent as? ViewGroup)?.removeView(this)
-            queueDispatcher?.onDetachedClippableView()
+        if (descView != null) {
+            setOnDismissEvent(descView!!.itemToDismiss ?: this)
+            addView(descView!!.descView, descView!!.lp)
+        } else {
+            setOnDismissEvent(this)
         }
+        container.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
     }
+
+    private fun setOnDismissEvent(v: View) =
+        v.setOnClickListener { dismiss() }
+
+    private fun dismiss() {
+        (parent as? ViewGroup)?.removeView(this)
+        queueDispatcher?.onDetachedClippableView()
+    }
+
 }
 
 class DescriptionView(
     val descView: View,
+    itemIdToDismiss: Int? = null,
     layoutWidth: Int = WRAP_CONTENT,
     layoutHeight: Int = WRAP_CONTENT,
     topMargin: Int = 0,
@@ -63,11 +74,22 @@ class DescriptionView(
     rightMargin: Int = 0,
     gravity: Int = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
 ) {
+    internal var itemToDismiss: View? = null
     val lp = FrameLayout.LayoutParams(layoutWidth, layoutHeight).also {
         it.gravity = gravity
         it.topMargin = topMargin
         it.leftMargin = leftMargin
         it.bottomMargin = bottomMargin
         it.rightMargin = rightMargin
+    }
+
+    init {
+        itemIdToDismiss?.let {
+            try {
+                itemToDismiss = descView.findViewById(itemIdToDismiss)
+            } catch (e: Exception) {
+                throw Exception("Cannot find the component for id '$itemIdToDismiss'")
+            }
+        }
     }
 }
