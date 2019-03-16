@@ -1,5 +1,5 @@
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
-![versionBadge](https://img.shields.io/badge/version-0.3.2-green.svg)
+![versionBadge](https://img.shields.io/badge/version-0.3.3-green.svg)
 
 # Clipper
 
@@ -42,7 +42,7 @@ repositories {
 dependencies {
     ...
     
-    implementation "jp.co.youmeee:clipper:0.3.2"  // Add it here.
+    implementation "jp.co.youmeee:clipper:0.3.3"  // Add it here.
 }
 ```
 
