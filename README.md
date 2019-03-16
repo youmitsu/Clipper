@@ -1,10 +1,10 @@
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
-![versionBadge](https://img.shields.io/badge/version-0.1.2-green.svg)
+![versionBadge](https://img.shields.io/badge/version-0.3.2-green.svg)
 
-# ClippableLayout
+# Clipper
 
 
-The layout of Android development to be used for clipping view by specific shape(eg. circle, rectangle, custom shape).
+A library of Android development to be used for clipping view by specific shape(eg. circle, rectangle, custom shape).
 
 
 ## Abstract
@@ -19,18 +19,30 @@ In that cases, This library helps you implement it.
 ## Requirements
 
 
-- Android API Level: 19 to use
+- Android API Level: 21 to use
 
 ## Getting Started
 
 
-- add dependencies into your app/build.gradle.
+- Add this into your `build.gradle` file of project root.
+
+
+```
+repositories {
+    maven {
+        url "https://youmitsu.github.io/Clipper/repository"
+    }
+}
+```
+
+
+- Add dependencies into your `app/build.gradle` file.
 
 ```
 dependencies {
     ...
     
-    implementation "youmeee.co.jp:clippablelayout:0.1.2"  // Add it here.
+    implementation "jp.co.youmeee:clipper:0.3.2"  // Add it here.
 }
 ```
 
@@ -41,27 +53,28 @@ dependencies {
 1. Create the `ClipEntry` instance. `ClipEntry` includes the object to be clipped and its margin. I prepared shapes(eg. circle, rect, and custom) to clip.
 
 ```kotlin
-val circleEntry = CircleClipEntry(textView, resources.getDimension(R.dimen.circle_clip_margin))
-val rectEntry = RectClipEntry(textView2, resources.getDimension(R.dimen.circle_clip_margin))
+
+val cl = ClipperLayout(this)  // initialize a ClipperLayout object.
+
+val cl2 = ClipperLayout(this).also {  // initialize a ClipperLayout object and its propeties by also{}.
+    it.add(CircleClipEntry(textView), CircleClipEntry(textView2))  //
+    it.clipAnimator = DefaultClipAnimator()
+    it.descView = DescriptionView(imageView)
+}
 ```
 
-2. Create and inflate `ViewGroup` to describe the object to be clipped.
+2. Execute clipping.
+
 
 ```kotlin
-val tutorialDescView = layoutInflater.inflate(R.layout.clippable_description, null)
+cl2.clip()
 ```
 
-3. Create the `ClippableItem`. To initialize it, you should use the `Context` and the list of `ClipEntry`, ViewGroup to describe with constructor.
+3. If you want to execute multiple ClipperLayout on same time, you can use `BundleClipExecutor`
 
-```kotlin
-val tutorialWindow1 = ClippableItem(this, listOf(circleEntry, rectEntry))
-val tutorialWindow2 = ClippableItem(this, listOf(rectEntry), imageView)
+
 ```
-
-4. Finally, Create the `ClipExecutor` instance with `ClipExecutorFactory`. Once you call `execute()` method, the clipping is immediately executed.
-
-```kotlin
-ClipExecutorFactory.create(listOf(tutorialWindow1, tutorialWindow2), window, container).execute()
+Clipper.createBundleExecutor(container, window, cl, cl2).clip()
 ```
 
 ## Licence
