@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>jp.co.youmeee</groupId>
   <artifactId>clipper</artifactId>
-  <version>0.3.3</version>
+  <version>0.3.4</version>
   <packaging>aar</packaging>
   <dependencies>
     <dependency>
