@@ -36,9 +36,9 @@ class ClipperLayout constructor(context: Context) : FrameLayout(context) {
         }
     }
 
-    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        clipAnimator?.animateClip(this)
+    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
+        super.onLayout(changed, left, top, right, bottom)
+        clipAnimator?.animateClipStart(this, null)
     }
 
     fun clip(container: ViewGroup, window: Window) {
@@ -53,9 +53,15 @@ class ClipperLayout constructor(context: Context) : FrameLayout(context) {
         container.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
     }
 
-    private fun setOnDismissEvent(v: View) = v.setOnClickListener { dismiss() }
+    private fun setOnDismissEvent(v: View) = v.setOnClickListener {
+        if (clipAnimator == null) {
+            dismiss().invoke()
+        } else {
+            clipAnimator?.animateClipEnd(this, dismiss())
+        }
+    }
 
-    private fun dismiss() {
+    private fun dismiss(): () -> Unit = {
         (parent as? ViewGroup)?.removeView(this)
         queueDispatcher?.onDetachedClippableView()
     }

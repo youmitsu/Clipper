@@ -8,14 +8,43 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.Interpolator
 
 abstract class ClipAnimator {
-    abstract fun animateClip(targetLayout: ClipperLayout)
+    abstract fun animateClipStart(targetLayout: ClipperLayout, onAnimateEnded: (() -> Unit)?)
+    abstract fun animateClipEnd(targetLayout: ClipperLayout, onAnimateEnded: (() -> Unit)?)
 }
 
-class DefaultClipAnimator(private val duration: Int = 250) :
-    ClipAnimator() {
-    override fun animateClip(targetLayout: ClipperLayout) {
-        ObjectAnimator.ofFloat(targetLayout, "alpha", 0f, 1f).apply {
-            duration = this.duration
+class DefaultClipAnimator(private val animateDuration: Long = 250L) : ClipAnimator() {
+
+    override fun animateClipStart(targetLayout: ClipperLayout, onAnimateEnded: (() -> Unit)?) {
+        animateClip(targetLayout, 0f, 1f, onAnimateEnded)
+    }
+
+    override fun animateClipEnd(targetLayout: ClipperLayout, onAnimateEnded: (() -> Unit)?) {
+        animateClip(targetLayout, 1f, 0f, onAnimateEnded)
+    }
+
+    private fun animateClip(
+        targetLayout: ClipperLayout,
+        startAlpha: Float,
+        endAlpha: Float,
+        onAnimateEnded: (() -> Unit)? = null
+    ) {
+        ObjectAnimator.ofFloat(targetLayout, "alpha", startAlpha, endAlpha).apply {
+            this.duration = animateDuration
+            addListener(object : Animator.AnimatorListener {
+                override fun onAnimationRepeat(animation: Animator?) {
+                }
+
+                override fun onAnimationEnd(animation: Animator?) {
+                    onAnimateEnded?.invoke()
+                }
+
+                override fun onAnimationCancel(animation: Animator?) {
+                }
+
+                override fun onAnimationStart(animation: Animator?) {
+                }
+
+            })
             start()
         }
     }
@@ -25,27 +54,33 @@ class CircleRevealClipAnimator(
     private val duration: Long = 250L,
     private val interpolator: Interpolator = AccelerateInterpolator()
 ) : ClipAnimator() {
-    override fun animateClip(targetLayout: ClipperLayout) {
-        val targetClipView: View? = targetLayout.clipperView?.clipList?.firstOrNull()?.targetView
+
+    override fun animateClipStart(targetLayout: ClipperLayout, onAnimateEnded: (() -> Unit)?) {
+        animateClip(targetLayout, 0f, targetLayout.measuredHeight.toFloat(), onAnimateEnded)
+    }
+
+    override fun animateClipEnd(targetLayout: ClipperLayout, onAnimateEnded: (() -> Unit)?) {
+        animateClip(targetLayout, targetLayout.measuredHeight.toFloat(), 0f, onAnimateEnded)
+    }
+
+    private fun animateClip(
+        targetLayout: ClipperLayout,
+        startRadius: Float,
+        endRadius: Float,
+        onAnimateEnded: (() -> Unit)? = null
+    ) {
+        val targetClipView: View? = targetLayout.clipperView.clipList.first().targetView
         val centerX: Int =
             if (targetClipView == null) targetLayout.measuredWidth / 2 else (targetClipView.right + targetClipView.left) / 2
         val centerY: Int =
             if (targetClipView == null) targetLayout.measuredHeight / 2 else (targetClipView.top + targetClipView.bottom) / 2
-        val radius: Float =
-            if (targetClipView == null) 0f else (targetClipView.right - targetClipView.left).toFloat()
 
         val animator = ViewAnimationUtils.createCircularReveal(
             targetLayout,
             centerX,
             centerY,
-            radius,
-            Math.sqrt(
-                Math.pow(
-                    targetLayout.measuredWidth.toDouble(), 2.0
-                ) + Math.pow(
-                    targetLayout.measuredHeight.toDouble(), 2.0
-                )
-            ).toFloat()
+            startRadius,
+            endRadius
         )
         animator.interpolator = this.interpolator
         animator.duration = this.duration
@@ -54,6 +89,7 @@ class CircleRevealClipAnimator(
             }
 
             override fun onAnimationEnd(animation: Animator?) {
+                onAnimateEnded?.invoke()
             }
 
             override fun onAnimationCancel(animation: Animator?) {
