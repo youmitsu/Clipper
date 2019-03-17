@@ -17,7 +17,7 @@ class ClipperLayout constructor(context: Context) : FrameLayout(context) {
     internal var clipperView: ClipperView = ClipperView(context)
     var clipEntries: MutableList<ClipEntry> = mutableListOf()
     var descView: DescriptionView? = null
-    var backGroundColor: Int = R.color.default_gray
+    var backGroundColor: Int = R.color.clipper_default_gray
     var clipAnimator: ClipAnimator? = null
 
     internal var queueDispatcher: ClipperQueueDispatcher? = null
@@ -42,7 +42,6 @@ class ClipperLayout constructor(context: Context) : FrameLayout(context) {
     }
 
     fun clip(container: ViewGroup, window: Window) {
-        isClickable = true
         clipperView.setClipViews(clipEntries)
         clipperView.showOverlay(this, window, backGroundColor)
         if (descView != null) {
