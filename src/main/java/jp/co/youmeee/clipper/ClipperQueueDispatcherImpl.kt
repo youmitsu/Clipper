@@ -5,8 +5,11 @@ import android.view.Window
 import java.util.*
 import java.util.concurrent.LinkedBlockingQueue
 
-class ClipperQueueDispatcherImpl(val window: Window, val parent: ViewGroup) :
-    ClipperQueueDispatcher {
+class ClipperQueueDispatcherImpl(
+    private val window: Window,
+    private val parent: ViewGroup,
+    private val clipAnimator: ClipAnimator
+) : ClipperQueueDispatcher {
 
     private val clipperLayoutQueue: Queue<ClipperLayout> = LinkedBlockingQueue()
 
@@ -24,7 +27,7 @@ class ClipperQueueDispatcherImpl(val window: Window, val parent: ViewGroup) :
     }
 
     override fun execute() {
-        clipperLayoutQueue.poll()?.clip(parent, window)
+        clipperLayoutQueue.poll()?.clip(parent, window, clipAnimator)
     }
 
     override fun onDetachedClippableView() {

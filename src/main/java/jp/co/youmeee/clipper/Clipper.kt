@@ -8,24 +8,37 @@ object Clipper {
     private fun initQueueDispatcher(
         clipItems: List<ClipperLayout>,
         window: Window,
-        parent: ViewGroup
-    ): ClipperQueueDispatcher = ClipperQueueDispatcherImpl(window, parent).apply { addAll(clipItems) }
+        parent: ViewGroup,
+        clipAnimator: ClipAnimator
+    ): ClipperQueueDispatcher = ClipperQueueDispatcherImpl(window, parent, clipAnimator).apply { addAll(clipItems) }
 
-    fun createBundleExecutor(parent: ViewGroup, window: Window, vararg clipItem: ClipperLayout): ClipBundleExecutor =
+    fun createBundleExecutor(
+        parent: ViewGroup,
+        window: Window,
+        clipAnimator: ClipAnimator,
+        vararg clipItem: ClipperLayout
+    ): ClipBundleExecutor =
         ClipBundleExecutor(
             Clipper.initQueueDispatcher(
                 clipItem.toList(),
                 window,
-                parent
+                parent,
+                clipAnimator
             )
         )
 
-    fun createBundleExecutor(parent: ViewGroup, window: Window, clipItems: List<ClipperLayout>): ClipBundleExecutor =
+    fun createBundleExecutor(
+        parent: ViewGroup,
+        window: Window,
+        clipAnimator: ClipAnimator,
+        clipItems: List<ClipperLayout>
+    ): ClipBundleExecutor =
         ClipBundleExecutor(
             Clipper.initQueueDispatcher(
                 clipItems,
                 window,
-                parent
+                parent,
+                clipAnimator
             )
         )
 }
