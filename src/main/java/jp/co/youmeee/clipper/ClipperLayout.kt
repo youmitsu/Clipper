@@ -22,13 +22,13 @@ class ClipperLayout constructor(context: Context) : FrameLayout(context) {
 
     internal var queueDispatcher: ClipperQueueDispatcher? = null
 
-    fun add(clipEntry: ClipEntry) {
-        clipEntries.add(clipEntry)
+    init {
+        isClickable = true
     }
 
-    fun add(vararg clipEntry: ClipEntry) {
-        this.add(clipEntry.toList())
-    }
+    fun add(clipEntry: ClipEntry) = clipEntries.add(clipEntry)
+
+    fun add(vararg clipEntry: ClipEntry) = this.add(clipEntry.toList())
 
     fun add(entries: List<ClipEntry>) {
         for (entry in entries) {
@@ -42,6 +42,7 @@ class ClipperLayout constructor(context: Context) : FrameLayout(context) {
     }
 
     fun clip(container: ViewGroup, window: Window) {
+        isClickable = true
         clipperView.setClipViews(clipEntries)
         clipperView.showOverlay(this, window, backGroundColor)
         if (descView != null) {
@@ -53,8 +54,7 @@ class ClipperLayout constructor(context: Context) : FrameLayout(context) {
         container.addView(this, LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT))
     }
 
-    private fun setOnDismissEvent(v: View) =
-        v.setOnClickListener { dismiss() }
+    private fun setOnDismissEvent(v: View) = v.setOnClickListener { dismiss() }
 
     private fun dismiss() {
         (parent as? ViewGroup)?.removeView(this)
