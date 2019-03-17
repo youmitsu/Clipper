@@ -8,7 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue
 class ClipperQueueDispatcherImpl(
     private val window: Window,
     private val parent: ViewGroup,
-    private val clipAnimator: ClipAnimator
+    private val clipAnimator: ClipAnimator?
 ) : ClipperQueueDispatcher {
 
     private val clipperLayoutQueue: Queue<ClipperLayout> = LinkedBlockingQueue()

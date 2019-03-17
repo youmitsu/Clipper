@@ -9,13 +9,13 @@ object Clipper {
         clipItems: List<ClipperLayout>,
         window: Window,
         parent: ViewGroup,
-        clipAnimator: ClipAnimator
+        clipAnimator: ClipAnimator?
     ): ClipperQueueDispatcher = ClipperQueueDispatcherImpl(window, parent, clipAnimator).apply { addAll(clipItems) }
 
     fun createBundleExecutor(
         parent: ViewGroup,
         window: Window,
-        clipAnimator: ClipAnimator,
+        clipAnimator: ClipAnimator?,
         vararg clipItem: ClipperLayout
     ): ClipBundleExecutor =
         ClipBundleExecutor(
@@ -30,7 +30,7 @@ object Clipper {
     fun createBundleExecutor(
         parent: ViewGroup,
         window: Window,
-        clipAnimator: ClipAnimator,
+        clipAnimator: ClipAnimator?,
         clipItems: List<ClipperLayout>
     ): ClipBundleExecutor =
         ClipBundleExecutor(
