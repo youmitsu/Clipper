@@ -62,6 +62,7 @@ class ClipperLayout constructor(context: Context) : FrameLayout(context) {
     }
 
     private fun dismiss(): () -> Unit = {
+        removeAllViews()
         (parent as? ViewGroup)?.removeView(this)
         queueDispatcher?.onDetachedClippableView()
     }
