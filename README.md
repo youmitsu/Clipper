@@ -1,5 +1,5 @@
 [![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](LICENSE)
-![versionBadge](https://img.shields.io/badge/version-0.3.4-green.svg)
+![versionBadge](https://img.shields.io/badge/version-0.3.5-green.svg)
 
 # Clipper
 
