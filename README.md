@@ -88,7 +88,7 @@ val cl2 = ClipperLayout(this, DescriptionView(imageView2))
         .addEntry(CircleClipEntry(textView2))
 
 // Create `ClipBundleExecutor` through a `Clipper.createBundleExecutor()` method. To execute clipping, call `clip()` method. 
-Clipper.createBundleExecutor(container, window, cl, cl2).clip()  
+Clipper.createBundleExecutor(container, window, cl, cl2).execute()  
 
 ```
 
@@ -97,7 +97,7 @@ Clipper.createBundleExecutor(container, window, cl, cl2).clip()
 
 ```kotlin
 
-Clipper.createBundleExecutor(container, window, CircleRevealClipAnimator(), cl, cl2).clip() 
+Clipper.createBundleExecutor(container, window, CircleRevealClipAnimator(), cl, cl2).execute() 
 
 ```
 
