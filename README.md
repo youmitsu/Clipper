@@ -102,7 +102,7 @@ Clipper.createBundleExecutor(container, window, CircleRevealClipAnimator(), cl, 
 ```
 
 
-## List of ClipAnimators
+## ClipAnimator
 
 I prepared two ClipAnimator classes.
 
