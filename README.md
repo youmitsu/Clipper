@@ -74,7 +74,7 @@ val cl2 = ClipperLayout(this, DescriptionView(imageView))
 }
 ```
 
-### Show a single tutorial view
+### Show multiple tutorial views in order
 
 
 1. If you want to execute multiple ClipperLayout on same time, you can use `ClipBundleExecutor`
