@@ -87,7 +87,7 @@ val cl = ClipperLayout(this, DescriptionView(imageView1))
 val cl2 = ClipperLayout(this, DescriptionView(imageView2))
         .addEntry(CircleClipEntry(textView2))
 
-// Create `ClipBundleExecutor` through a `Clipper.createBundleExecutor()` method. To execute clipping, call `clip()` method. 
+// Create `ClipBundleExecutor` through a `Clipper.createBundleExecutor()` method. To execute clipping, call `execute()` method. 
 Clipper.createBundleExecutor(container, window, cl, cl2).execute()  
 
 ```
@@ -106,12 +106,12 @@ Clipper.createBundleExecutor(container, window, CircleRevealClipAnimator(), cl, 
 
 I prepared two ClipAnimator classes.
 
-1. DefaultClipAnimator
+### 1. DefaultClipAnimator
 
 An animation in which the alpha value changes gradually.
 
 
-2. CircleRevealClipAnimator
+### 2. CircleRevealClipAnimator
 
 Animation that changes to circular shape.
 
