@@ -70,15 +70,15 @@ class CircleRevealClipAnimator(
         onAnimateEnded: (() -> Unit)? = null
     ) {
         val targetClipView: View? = targetLayout.clipperView.clipList.first().targetView
-        val centerX: Int =
-            if (targetClipView == null) targetLayout.measuredWidth / 2 else (targetClipView.right + targetClipView.left) / 2
-        val centerY: Int =
-            if (targetClipView == null) targetLayout.measuredHeight / 2 else (targetClipView.top + targetClipView.bottom) / 2
+//        val centerX: Int =
+//            if (targetClipView == null) targetLayout.measuredWidth / 2 else (targetClipView.right + targetClipView.left) / 2
+//        val centerY: Int =
+//            if (targetClipView == null) targetLayout.measuredHeight / 2 else (targetClipView.top + targetClipView.bottom) / 2
 
         val animator = ViewAnimationUtils.createCircularReveal(
             targetLayout,
-            centerX,
-            centerY,
+            0,
+            0,
             startRadius,
             endRadius
         )

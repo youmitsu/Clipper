@@ -12,28 +12,46 @@ import youmeee.co.jp.clipper.R
 /**
  * ClipperLayout
  */
-class ClipperLayout constructor(context: Context) : FrameLayout(context) {
+class ClipperLayout constructor(
+    context: Context
+) : FrameLayout(context) {
 
-    internal var clipperView: ClipperView = ClipperView(context)
-    var clipEntries: MutableList<ClipEntry> = mutableListOf()
+    constructor(
+        context: Context,
+        descView: DescriptionView? = null,
+        backGroundColor: Int = R.color.clipper_default_gray
+    ) : this(context) {
+        this.descView = descView
+        this.backGroundColor = backGroundColor
+    }
+
     var descView: DescriptionView? = null
     var backGroundColor: Int = R.color.clipper_default_gray
-
     private var clipAnimator: ClipAnimator? = null
+
+    internal var clipperView: ClipperView = ClipperView(context)
+    private var clipEntries: MutableList<ClipEntry> = mutableListOf()
     internal var queueDispatcher: ClipperQueueDispatcher? = null
 
     init {
         isClickable = true
     }
 
-    fun add(clipEntry: ClipEntry) = clipEntries.add(clipEntry)
+    fun addEntry(clipEntry: ClipEntry): ClipperLayout {
+        clipEntries.add(clipEntry)
+        return this
+    }
 
-    fun add(vararg clipEntry: ClipEntry) = this.add(clipEntry.toList())
+    fun addEntries(vararg clipEntry: ClipEntry): ClipperLayout {
+        this.addEntries(clipEntry.toList())
+        return this
+    }
 
-    fun add(entries: List<ClipEntry>) {
+    fun addEntries(entries: List<ClipEntry>): ClipperLayout {
         for (entry in entries) {
             clipEntries.add(entry)
         }
+        return this
     }
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
