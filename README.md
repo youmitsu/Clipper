@@ -19,6 +19,7 @@ In that cases, This library helps you implement it.
 
 
 - Android API Level: 21 to use
+- Use only from Kotlin class, not intended for use from Java
 
 
 ## Getting Started
