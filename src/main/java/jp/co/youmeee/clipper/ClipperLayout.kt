@@ -1,6 +1,7 @@
 package jp.co.youmeee.clipper
 
 import android.content.Context
+import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -12,21 +13,23 @@ import youmeee.co.jp.clipper.R
 /**
  * ClipperLayout
  */
-class ClipperLayout constructor(
-    context: Context
-) : FrameLayout(context) {
+class ClipperLayout : FrameLayout {
+
+    constructor(context: Context) : this(context, descView = null)
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
 
     constructor(
         context: Context,
         descView: DescriptionView? = null,
         backGroundColor: Int = R.color.clipper_default_gray
-    ) : this(context) {
+    ) : super(context) {
         this.descView = descView
         this.backGroundColor = backGroundColor
     }
 
-    var descView: DescriptionView? = null
-    var backGroundColor: Int = R.color.clipper_default_gray
+    private var descView: DescriptionView? = null
+    private var backGroundColor: Int = R.color.clipper_default_gray
     private var clipAnimator: ClipAnimator? = null
 
     internal var clipperView: ClipperView = ClipperView(context)
