@@ -40,16 +40,19 @@ class ClipperLayout : FrameLayout {
         isClickable = true
     }
 
+    @SuppressWarnings
     fun addEntry(clipEntry: ClipEntry): ClipperLayout {
         clipEntries.add(clipEntry)
         return this
     }
 
+    @SuppressWarnings
     fun addEntries(vararg clipEntry: ClipEntry): ClipperLayout {
         this.addEntries(clipEntry.toList())
         return this
     }
 
+    @SuppressWarnings
     fun addEntries(entries: List<ClipEntry>): ClipperLayout {
         for (entry in entries) {
             clipEntries.add(entry)
@@ -62,6 +65,7 @@ class ClipperLayout : FrameLayout {
         clipAnimator?.animateClipStart(this, null)
     }
 
+    @SuppressWarnings
     fun clip(container: ViewGroup, window: Window, animator: ClipAnimator? = null) {
         clipAnimator = animator
         clipperView.setClipViews(clipEntries)
