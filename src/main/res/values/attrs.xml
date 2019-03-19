@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="ClipperLayout">
-        <attr name="backgroundColor" format="reference"/>
-        <attr name="transitionEnabled" format="boolean"/>
+        <!--<attr name="backgroundColor" format="reference"/>-->
+        <!--<attr name="transitionEnabled" format="boolean"/>-->
+        <attr name="dismissTriggerItemId" format="reference"/>
     </declare-styleable>
 </resources>

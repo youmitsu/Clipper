@@ -17,7 +17,9 @@ class ClipperLayout : FrameLayout {
 
     constructor(context: Context) : this(context, descView = null)
 
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+
+    }
 
     constructor(
         context: Context,
