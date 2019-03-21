@@ -18,7 +18,7 @@ class ClipperLayout : FrameLayout {
     constructor(context: Context) : this(context, descView = null)
 
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
-
+        //TODO: Add.
     }
 
     constructor(
@@ -48,7 +48,7 @@ class ClipperLayout : FrameLayout {
         return this
     }
 
-    @SuppressWarnings
+    @SuppressWarnings("unused")
     fun addEntries(vararg clipEntry: ClipEntry): ClipperLayout {
         this.addEntries(clipEntry.toList())
         return this
