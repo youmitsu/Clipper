@@ -1,10 +1,9 @@
 package jp.co.youmeee.clipper
 
 import android.content.Context
-import android.view.Gravity
+import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.Window
 import android.widget.FrameLayout
 import youmeee.co.jp.clipper.R
@@ -12,41 +11,53 @@ import youmeee.co.jp.clipper.R
 /**
  * ClipperLayout
  */
-class ClipperLayout constructor(
-    context: Context
-) : FrameLayout(context) {
+class ClipperLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
-    constructor(
-        context: Context,
-        descView: DescriptionView? = null,
-        backGroundColor: Int = R.color.clipper_default_gray
-    ) : this(context) {
-        this.descView = descView
-        this.backGroundColor = backGroundColor
-    }
+    /**
+     * attr attributes
+     */
+    private var itemIdToDismiss: Int = 0
+    private var overlayColorId: Int = R.color.clipper_default_gray
 
-    var descView: DescriptionView? = null
-    var backGroundColor: Int = R.color.clipper_default_gray
-    private var clipAnimator: ClipAnimator? = null
-
+    /**
+     * Items to use for clipping
+     */
     internal var clipperView: ClipperView = ClipperView(context)
     private var clipEntries: MutableList<ClipEntry> = mutableListOf()
+    private var clipAnimator: ClipAnimator? = null
+
+    /**
+     * others
+     */
     internal var queueDispatcher: ClipperQueueDispatcher? = null
 
     init {
         isClickable = true
+        val a = context.obtainStyledAttributes(
+            attrs,
+            R.styleable.ClipperLayout
+        )
+        try {
+            itemIdToDismiss = a.getResourceId(R.styleable.ClipperLayout_dismissTriggerItemId, 0)
+            overlayColorId = a.getResourceId(R.styleable.ClipperLayout_overlayColor, R.color.clipper_default_gray)
+        } finally {
+            a.recycle()
+        }
     }
 
+    @SuppressWarnings
     fun addEntry(clipEntry: ClipEntry): ClipperLayout {
         clipEntries.add(clipEntry)
         return this
     }
 
+    @SuppressWarnings("unused")
     fun addEntries(vararg clipEntry: ClipEntry): ClipperLayout {
         this.addEntries(clipEntry.toList())
         return this
     }
 
+    @SuppressWarnings
     fun addEntries(entries: List<ClipEntry>): ClipperLayout {
         for (entry in entries) {
             clipEntries.add(entry)
@@ -59,13 +70,18 @@ class ClipperLayout constructor(
         clipAnimator?.animateClipStart(this, null)
     }
 
+    @SuppressWarnings
     fun clip(container: ViewGroup, window: Window, animator: ClipAnimator? = null) {
         clipAnimator = animator
         clipperView.setClipViews(clipEntries)
-        clipperView.showOverlay(this, window, backGroundColor)
-        if (descView != null) {
-            setOnDismissEvent(descView!!.itemToDismiss ?: this)
-            addView(descView!!.descView, descView!!.lp)
+        clipperView.showOverlay(this, window, overlayColorId)
+        if (itemIdToDismiss != 0) {
+            val nextTriggerView = try {
+                findViewById<View>(itemIdToDismiss)
+            } catch (e: IllegalArgumentException) {
+                throw IllegalArgumentException("Cannot find view by $itemIdToDismiss")
+            }
+            setOnDismissEvent(nextTriggerView)
         } else {
             setOnDismissEvent(this)
         }
@@ -86,35 +102,4 @@ class ClipperLayout constructor(
         queueDispatcher?.onDetachedClippableView()
     }
 
-}
-
-class DescriptionView(
-    val descView: View,
-    itemIdToDismiss: Int? = null,
-    layoutWidth: Int = WRAP_CONTENT,
-    layoutHeight: Int = WRAP_CONTENT,
-    topMargin: Int = 0,
-    leftMargin: Int = 0,
-    bottomMargin: Int = 0,
-    rightMargin: Int = 0,
-    gravity: Int = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
-) {
-    internal var itemToDismiss: View? = null
-    val lp = FrameLayout.LayoutParams(layoutWidth, layoutHeight).also {
-        it.gravity = gravity
-        it.topMargin = topMargin
-        it.leftMargin = leftMargin
-        it.bottomMargin = bottomMargin
-        it.rightMargin = rightMargin
-    }
-
-    init {
-        itemIdToDismiss?.let {
-            try {
-                itemToDismiss = descView.findViewById(itemIdToDismiss)
-            } catch (e: Exception) {
-                throw Exception("Cannot find the component for id '$itemIdToDismiss'")
-            }
-        }
-    }
 }
