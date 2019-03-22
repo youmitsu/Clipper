@@ -13,12 +13,22 @@ import youmeee.co.jp.clipper.R
  */
 class ClipperLayout(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
-    private var backGroundColor: Int = R.color.clipper_default_gray
-    private var clipAnimator: ClipAnimator? = null
-
+    /**
+     * attr attributes
+     */
     private var itemIdToDismiss: Int = 0
+    private var overlayColorId: Int = R.color.clipper_default_gray
+
+    /**
+     * Items to use for clipping
+     */
     internal var clipperView: ClipperView = ClipperView(context)
     private var clipEntries: MutableList<ClipEntry> = mutableListOf()
+    private var clipAnimator: ClipAnimator? = null
+
+    /**
+     * others
+     */
     internal var queueDispatcher: ClipperQueueDispatcher? = null
 
     init {
@@ -29,6 +39,7 @@ class ClipperLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
         )
         try {
             itemIdToDismiss = a.getResourceId(R.styleable.ClipperLayout_dismissTriggerItemId, 0)
+            overlayColorId = a.getResourceId(R.styleable.ClipperLayout_overlayColor, R.color.clipper_default_gray)
         } finally {
             a.recycle()
         }
@@ -63,7 +74,7 @@ class ClipperLayout(context: Context, attrs: AttributeSet?) : FrameLayout(contex
     fun clip(container: ViewGroup, window: Window, animator: ClipAnimator? = null) {
         clipAnimator = animator
         clipperView.setClipViews(clipEntries)
-        clipperView.showOverlay(this, window, backGroundColor)
+        clipperView.showOverlay(this, window, overlayColorId)
         if (itemIdToDismiss != 0) {
             val nextTriggerView = try {
                 findViewById<View>(itemIdToDismiss)
