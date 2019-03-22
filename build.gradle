@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 16
-        versionName "3.7"
+        versionCode 17
+        versionName "3.8"
         version = android.defaultConfig.versionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -53,7 +53,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository url: "file://${repo.absolutePath}"
-            pom.version = '0.3.7'
+            pom.version = '0.3.8'
             pom.groupId = 'jp.co.youmeee'
             pom.artifactId = 'clipper'
         }
