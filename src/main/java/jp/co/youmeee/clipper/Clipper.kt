@@ -1,18 +1,22 @@
 package jp.co.youmeee.clipper
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.Window
 import androidx.annotation.LayoutRes
 
 object ClipperLayoutInflater {
 
-    private fun inflate() {
-        //TODO: inflate initialize ClipperLayout
-    }
-
-    fun from(context: Context, @LayoutRes layoutId: Int): ClipperLayout {
-        return ClipperLayout(context)
+    fun inflate(context: Context, @LayoutRes layoutId: Int): ClipperLayout {
+        val layout = LayoutInflater.from(context).inflate(layoutId, null)
+        lateinit var clipperLayout: ClipperLayout
+        try {
+            clipperLayout = layout as ClipperLayout
+        } catch (e: ClassCastException) {
+            throw ClassCastException("Cannot cast $layout to ClipperLayout")
+        }
+        return clipperLayout
     }
 }
 
