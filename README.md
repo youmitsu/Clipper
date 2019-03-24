@@ -52,6 +52,55 @@ dependencies {
 
 ### Show a single tutorial view
 
+1. Create the ClipperLayout's layout resource file, e.g. `tutorial_view_first.xml`.
+
+ClipperLayout's child views is used for description againt clipped view.
+There are several attributes.
+
+
+
+```tutorial_view_first.xml
+
+<?xml version="1.0" encoding="utf-8"?>
+<jp.co.youmeee.clipper.ClipperLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        app:dismissTriggerItemId="@id/next_button">
+
+    <com.google.android.material.card.MaterialCardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical|center_horizontal">
+
+        <TextView
+                android:id="@+id/text"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:text="You can record voice with this button."
+                android:layout_margin="20dp"
+                android:textSize="20sp"/>
+
+        <com.google.android.material.button.MaterialButton
+                android:id="@+id/next_button"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="right|bottom"
+                android:layout_margin="20dp"
+                android:text="I GOT IT!"/>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</jp.co.youmeee.clipper.ClipperLayout>
+
+```
+
+
 1. Create the `ClipEntry` instance. `ClipEntry` includes the object to be clipped and its margin. I prepared shapes(eg. circle, rect, and custom) to clip.
 
 ```kotlin
@@ -78,12 +127,16 @@ val circleClipEntry = CircleClipEntry(textView)
 val cl = ClipperLayoutInflater.inflate(this, R.layout.tutorial_view_first)  // Create the ClipperLayout.
 cl.addEntry(circleClipEntry)  // Set ClipEntry instance.
 cl.addEntry(rectClipEntry)  // Add more ClipEntry instances.
-cl.clip()  // Execute clipping.
+cl.clip(container, window)  // Execute clipping.
+```
 
-// Write above codes simply.
+Write above codes simply.
+
+```
+
 ClipperLayoutInflater.inflate(this, R.layout.tutorial_view_first)
     .addEntry(circleClipEntry, rectClipEntry)
-    .clip()
+    .clip(container, window)
 
 ```
 
@@ -94,10 +147,10 @@ If you want to add animation, you can set ClipAnimator class when execution clip
 
 ```kotlin
 
-val cl2 = ClipperLayout(this, DescriptionView(imageView))
-        .addEntry(CircleClipEntry(textView))
-        .clip(container, window, DefaultClipAnimator()) // <- Add DefaultClipAnimator().
-}
+ClipperLayoutInflater.inflate(this, R.layout.tutorial_view_first)
+    .addEntry(circleClipEntry, rectClipEntry)
+    .clip(container, window, DefaultClipAnimator())  // Add ClipAnimator instance to the 3rd arg.
+
 ```
 
 ### Show multiple tutorial views in order
