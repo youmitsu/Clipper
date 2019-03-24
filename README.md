@@ -4,7 +4,7 @@
 # Clipper
 
 
-A library of Android development to be used for clipping view by specific shape(eg. circle, rectangle, custom shape).
+The AAR library to be used for clipping view by specific shape(eg. circle, rectangle, custom shape).
 
 
 ## Abstract
@@ -43,7 +43,7 @@ repositories {
 dependencies {
     ...
     
-    implementation "jp.co.youmeee:clipper:0.3.7"  // Add it here.
+    implementation "jp.co.youmeee:clipper:0.3.8"  // Add it here.
 }
 ```
 
@@ -56,15 +56,32 @@ dependencies {
 
 ```kotlin
 
-val cl = ClipperLayout(this)  // Initialize a ClipperLayout instance.
+val circleClipEntry = CircleClipEntry(textView)  // CircleClipEntry is the subclass of ClipEntry for clipping with a circle shape.
 
-val cl2 = ClipperLayout(this, DescriptionView(imageView))  // Initialize a ClipperLayout instance with DescriptionView.
-        .addEntry(CircleClipEntry(textView))  // Initialize Entry class and add to the ClipperLayout instance.
-        .clip(container, window)  // Execute clipping!! `container` is a parent ViewGroup
-}
+val rectClipEntry = RectClipEntry(textView2)  // RectClipEntry is the subclass of ClipEntry for clipping with a rectangle shape.
+
 ```
 
-2. If you want to add animation, you can set ClipAnimator class when execution clipping.
+2. Create `ClipperLayout` via `ClipperLayoutInflater`
+
+You should use `ClipperLayoutInflater.inflate()` when you create the ClipperLayout instance.
+ClipperLayout belongs to ViewGroup class, which is FrameLayout. 
+This layout includes overlapping view and describing view, and can execute a clipping behavior.
+
+
+```kotlin
+
+val circleClipEntry = CircleClipEntry(textView)
+val cl = ClipperLayoutInflater.inflate(this, R.layout.tutorial_view_first)  // Inflate the ClipperLayout.
+cl.addEntry(circleClipEntry)
+cl.clip()
+
+```
+
+
+3. (Optional) Add an animation.
+
+If you want to add animation, you can set ClipAnimator class when execution clipping.
 
 ```kotlin
 
