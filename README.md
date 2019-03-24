@@ -60,6 +60,9 @@ val circleClipEntry = CircleClipEntry(textView)  // CircleClipEntry is the subcl
 
 val rectClipEntry = RectClipEntry(textView2)  // RectClipEntry is the subclass of ClipEntry for clipping with a rectangle shape.
 
+// You can set margin for clipping.
+val circleClipEntry = CircleClipEntry(textView, resources.getDimensionPixelSize(R.dimen.fab_margin))  // Set the margin value into second args of ClipEntry constructor.
+
 ```
 
 2. Create `ClipperLayout` via `ClipperLayoutInflater`
@@ -72,9 +75,15 @@ This layout includes overlapping view and describing view, and can execute a cli
 ```kotlin
 
 val circleClipEntry = CircleClipEntry(textView)
-val cl = ClipperLayoutInflater.inflate(this, R.layout.tutorial_view_first)  // Inflate the ClipperLayout.
-cl.addEntry(circleClipEntry)
-cl.clip()
+val cl = ClipperLayoutInflater.inflate(this, R.layout.tutorial_view_first)  // Create the ClipperLayout.
+cl.addEntry(circleClipEntry)  // Set ClipEntry instance.
+cl.addEntry(rectClipEntry)  // Add more ClipEntry instances.
+cl.clip()  // Execute clipping.
+
+// Write above codes simply.
+ClipperLayoutInflater.inflate(this, R.layout.tutorial_view_first)
+    .addEntry(circleClipEntry, rectClipEntry)
+    .clip()
 
 ```
 
