@@ -57,7 +57,17 @@ dependencies {
 ClipperLayout's child views is used for description againt clipped view.
 There are several attributes.
 
+- dismissTriggerItemId
 
+This is a resource id.
+When this view is clicked, the overlapping view will be dismissed.
+If you don't set this attribute, the overlapping view is dismissed when it's clicked at any points in its view.
+
+- overlayColor
+
+This color means overlaid view's color.
+We can set any resource id of the colors.
+By the way, the default color is `#a7000000`.
 
 ```tutorial_view_first.xml
 
@@ -67,8 +77,9 @@ There are several attributes.
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        app:dismissTriggerItemId="@id/next_button">
+        app:dismissTriggerItemId="@id/next_button"> <!--The overlapping view will be dismissed when the id of next_button is clicked.-->
 
+    <!--Below view is for description.-->
     <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -95,6 +106,7 @@ There are several attributes.
                 android:text="I GOT IT!"/>
 
     </com.google.android.material.card.MaterialCardView>
+    <!--Above view is for description.-->
 
 </jp.co.youmeee.clipper.ClipperLayout>
 
