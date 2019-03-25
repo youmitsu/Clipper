@@ -113,7 +113,7 @@ By the way, the default color is `#a7000000`.
 ```
 
 
-1. Create the `ClipEntry` instance. `ClipEntry` includes the object to be clipped and its margin. I prepared shapes(eg. circle, rect, and custom) to clip.
+2. Create the `ClipEntry` instance. `ClipEntry` includes the object to be clipped and its margin. I prepared shapes(eg. circle, rect, and custom) to clip.
 
 ```kotlin
 
@@ -126,7 +126,7 @@ val circleClipEntry = CircleClipEntry(textView, resources.getDimensionPixelSize(
 
 ```
 
-2. Create `ClipperLayout` via `ClipperLayoutInflater`
+3. Create `ClipperLayout` via `ClipperLayoutInflater`
 
 You should use `ClipperLayoutInflater.inflate()` when you create the ClipperLayout instance.
 ClipperLayout belongs to ViewGroup class, which is FrameLayout. 
@@ -153,7 +153,7 @@ ClipperLayoutInflater.inflate(this, R.layout.tutorial_view_first)
 ```
 
 
-3. (Optional) Add an animation.
+4. (Optional) Add an animation.
 
 If you want to add animation, you can set ClipAnimator class when execution clipping.
 
@@ -173,10 +173,10 @@ ClipperLayoutInflater.inflate(this, R.layout.tutorial_view_first)
 
 ```kotlin
 
-val cl = ClipperLayout(this, DescriptionView(imageView1))
-        .addEntry(CircleClipEntry(textView1))
-val cl2 = ClipperLayout(this, DescriptionView(imageView2))
-        .addEntry(CircleClipEntry(textView2))
+val cl = ClipperLayoutInflater.inflate(this, R.layout.tutorial_view_first)
+    .addEntry(circleClipEntry)
+val cl2 = ClipperLayoutInflater.inflate(this, R.layout.tutorial_view_second)
+    .addEntry(circleClipEntry2)
 
 // Create `ClipBundleExecutor` through a `Clipper.createBundleExecutor()` method. To execute clipping, call `execute()` method. 
 Clipper.createBundleExecutor(container, window, cl, cl2).execute()  
