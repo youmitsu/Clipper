@@ -14,6 +14,10 @@ This library makes you help creating some tutorial views.
 When a tutorial view is showed, you may want to draw overlapping view and clip the object which you want to explain.
 In that cases, This library helps you implement it.
 
+## Sample project
+
+Here: 
+https://github.com/youmitsu/ClipperSample
 
 ## Requirements
 
