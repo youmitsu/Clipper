@@ -210,6 +210,12 @@ An animation in which the alpha value changes gradually.
 
 Animation that changes to circular shape.
 
+## Contribution
+
+I have developped this library yet.
+So, welcome any contributers.
+Please contact for me. 
+And I hope you to create issues or pull requests.
 
 ## Licence
 
