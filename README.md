@@ -29,14 +29,12 @@ https://github.com/youmitsu/ClipperSample
 ## Getting Started
 
 
-- Add this into your `build.gradle` file of project root.
+- Add this into your `build.gradle` file of project root. If you have already added, you don't need to add it.
 
 
 ```
 repositories {
-    maven {
-        url "https://youmitsu.github.io/Clipper/repository"
-    }
+    jcenter()  // Add it here.
 }
 ```
 
