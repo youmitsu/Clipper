@@ -219,4 +219,4 @@ And I hope you to create issues or pull requests.
 
 Copyright (c) 2019 Yu Mitsuhori (youmitsu).
 
-Licensed under the MTI License.
+Licensed under the MIT License.
